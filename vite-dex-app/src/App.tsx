@@ -286,7 +286,7 @@ export default function App() {
       <div className="sticky top-0 z-40 header-ocean">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-2.5">
-            <img src={poseidonLogo} alt="Poseidon" className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl object-contain shadow-lg" style={{ boxShadow: '0 0 16px rgba(34,211,238,0.4)', background: 'rgba(34,211,238,0.08)' }} />
+            <img src={poseidonLogo} alt="Poseidon" className="w-14 h-14 lg:w-16 lg:h-16 rounded-2xl object-contain shadow-lg" style={{ boxShadow: '0 0 16px rgba(34,211,238,0.4)', background: 'rgba(34,211,238,0.08)' }} />
             <div>
               <h1 className="text-lg lg:text-xl font-black tracking-tight" style={{ color: '#7dd3fc', textShadow: '0 0 20px rgba(125,211,252,0.5)' }}>
                 Poseidon DEX
