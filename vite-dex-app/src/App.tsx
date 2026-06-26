@@ -281,6 +281,7 @@ export default function App() {
       <div className="fish fish-1">🐟</div>
       <div className="fish fish-2">🐠</div>
       <div className="fish fish-3">🐡</div>
+      <div className="fish fish-4">🦈</div>
 
       {/* ====== HEADER ====== */}
       <div className="sticky top-0 z-40 header-ocean">

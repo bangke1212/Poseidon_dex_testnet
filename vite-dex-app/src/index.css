@@ -166,6 +166,7 @@ body {
 .fish-1 { top: 30%; animation-duration: 25s; animation-delay: 0s; }
 .fish-2 { top: 55%; animation-duration: 32s; animation-delay: 8s;  font-size: 16px; opacity: 0.25; }
 .fish-3 { top: 70%; animation-duration: 20s; animation-delay: 3s;  font-size: 20px; opacity: 0.3; }
+.fish-4 { top: 42%; animation-duration: 35s; animation-delay: 15s; font-size: 22px; opacity: 0.3; }
 
 @keyframes fishSwim {
   0%   { left: -80px;  transform: scaleX(1); }
