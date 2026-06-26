@@ -253,16 +253,16 @@ export default function App() {
     <div className="min-h-screen relative bg-white">
         <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden"><img src={bgWaveDaylight} alt="" className="w-full h-full object-cover" /></div>
       {/* ====== HEADER ====== */}
-      <div className="sticky top-0 z-40 bg-white border-b border-[#E0E0E0] shadow-md">
+      <div className="sticky top-0 z-40 bg-white border-b-2 border-[#C0C0C0] shadow-lg">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-2.5">
             <img src={poseidonLogo} alt="Poseidon" className="w-8 h-8 lg:w-10 lg:h-10 rounded-xl object-cover shadow-sm" />
-            <div><h1 className="text-base lg:text-lg font-bold text-[#1A1A1A] tracking-tight">Poseidon DEX</h1><p className="text-[10px] text-[#6B6B6B] font-semibold">Multi-chain · EVM + Solana</p></div>
+            <div><h1 className="text-lg lg:text-xl font-black text-[#111] tracking-tight">Poseidon DEX</h1><p className="text-xs text-[#4A4A4A] font-bold">Multi-chain · EVM + Solana</p></div>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowChainPicker(true)}
-              className="flex items-center gap-2 text-xs lg:text-sm font-medium border border-[#F0F0F0] rounded-full pl-3 pr-3 py-2 lg:py-2.5 bg-white text-[#1A1A1A] cursor-pointer hover:shadow-sm transition-all"
+              className="flex items-center gap-2 text-sm lg:text-base font-bold border border-[#F0F0F0] rounded-full pl-3 pr-3 py-2 lg:py-2.5 bg-white text-[#1A1A1A] cursor-pointer hover:shadow-sm transition-all"
             >
               <span className="text-base" style={{ color: (allChains as any)[selectedChain]?.color }}>{(allChains as any)[selectedChain]?.icon}</span>
               <span className="hidden sm:inline max-w-[100px] lg:max-w-none truncate">{(allChains as any)[selectedChain]?.label || selectedChain}</span>
@@ -270,7 +270,7 @@ export default function App() {
             </button>
             {connectedWallet ? (
               <div className="flex items-center gap-1">
-                <button onClick={disconnectWallet} className="flex items-center gap-2 text-xs lg:text-sm font-medium px-3 lg:px-4 py-2 lg:py-2.5 rounded-full bg-white text-[#1A1A1A] border border-[#F0F0F0] hover:shadow-sm transition-all group relative" title={connectedWallet.address}>
+                <button onClick={disconnectWallet} className="flex items-center gap-2 text-sm lg:text-base font-bold px-3 lg:px-4 py-2 lg:py-2.5 rounded-full bg-white text-[#1A1A1A] border border-[#F0F0F0] hover:shadow-sm transition-all group relative" title={connectedWallet.address}>
                   <span className="w-2 h-2 rounded-full bg-[#4ADE80] animate-pulse" />
                   <span className="w-5 h-5 rounded-md flex items-center justify-center shrink-0">
                       {connectedWallet.type === 'metamask' ? (
@@ -286,7 +286,7 @@ export default function App() {
                 {chainMismatch && <span className="text-[10px] px-2 py-1 rounded-full bg-[#FF6B6B] text-[#DC2626] font-medium animate-pulse"><WifiOff size={10} className="inline mr-1" />Wrong network</span>}
               </div>
             ) : (
-              <button onClick={() => setShowWalletModal(true)} className="flex items-center gap-2 text-xs lg:text-sm font-semibold px-4 py-2.5 rounded-full bg-[#B8A9E8] text-[#1A1A1A] hover:bg-[#A89AD8] hover:shadow-md transition-all duration-200">
+              <button onClick={() => setShowWalletModal(true)} className="flex items-center gap-2 text-sm lg:text-base font-extrabold px-5 py-3 rounded-full bg-[#B8A9E8] text-[#1A1A1A] hover:bg-[#A89AD8] hover:shadow-md transition-all duration-200">
                 <Wallet size={14} /><span>Connect</span>
               </button>
             )}
@@ -295,7 +295,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 lg:px-8 pb-3 lg:pb-4">
           <div className="flex gap-1 bg-[#E5E5E5] rounded-full p-1 w-fit overflow-x-auto">
             {tabs.map(t => { const Icon = t.icon; const active = activeTab === t.id; return (
-              <button key={t.id} onClick={() => setActiveTab(t.id)} className={`flex items-center gap-1.5 px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium rounded-full transition-all whitespace-nowrap ${active ? 'bg-white text-[#1A1A1A] shadow-sm' : 'text-[#6B6B6B] hover:text-[#1A1A1A]'}`}><Icon size={14} />{t.label}</button>
+              <button key={t.id} onClick={() => setActiveTab(t.id)} className={`flex items-center gap-1.5 px-3 lg:px-4 py-2 text-sm lg:text-base font-bold rounded-full transition-all whitespace-nowrap ${active ? 'bg-white text-[#111] shadow-md font-extrabold border-2 border-[#D0D0D0]' : 'text-[#4A4A4A] hover:text-[#111] font-bold'}`}><Icon size={14} />{t.label}</button>
             );})}
           </div>
         </div>
@@ -338,12 +338,12 @@ export default function App() {
               <div className="px-4 pb-5 pt-2 border-t border-[#F0F0F0]">
                 <p className="text-xs font-semibold text-[#1A1A1A] mb-3">Add Custom EVM Testnet</p>
                 <div className="space-y-2.5">
-                  <div><label className="text-[10px] font-medium text-[#6B6B6B] block mb-1">Network Name</label><input value={newNetwork.label} onChange={e => setNewNetwork((p: any) => ({ ...p, label: e.target.value }))} placeholder="e.g. Polygon Mumbai" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
+                  <div><label className="text-xs font-bold text-[#4A4A4A] block mb-1.5">Network Name</label><input value={newNetwork.label} onChange={e => setNewNetwork((p: any) => ({ ...p, label: e.target.value }))} placeholder="e.g. Polygon Mumbai" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
                   <div className="grid grid-cols-2 gap-2">
-                    <div><label className="text-[10px] font-medium text-[#6B6B6B] block mb-1">Chain ID</label><input value={newNetwork.chainId} onChange={e => setNewNetwork((p: any) => ({ ...p, chainId: e.target.value }))} placeholder="e.g. 80001" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
-                    <div><label className="text-[10px] font-medium text-[#6B6B6B] block mb-1">Native Token</label><input value={newNetwork.nativeToken} onChange={e => setNewNetwork((p: any) => ({ ...p, nativeToken: e.target.value }))} placeholder="MATIC" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
+                    <div><label className="text-xs font-bold text-[#4A4A4A] block mb-1.5">Chain ID</label><input value={newNetwork.chainId} onChange={e => setNewNetwork((p: any) => ({ ...p, chainId: e.target.value }))} placeholder="e.g. 80001" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
+                    <div><label className="text-xs font-bold text-[#4A4A4A] block mb-1.5">Native Token</label><input value={newNetwork.nativeToken} onChange={e => setNewNetwork((p: any) => ({ ...p, nativeToken: e.target.value }))} placeholder="MATIC" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
                   </div>
-                  <div><label className="text-[10px] font-medium text-[#6B6B6B] block mb-1">RPC URL</label><input value={newNetwork.rpcUrl} onChange={e => setNewNetwork((p: any) => ({ ...p, rpcUrl: e.target.value }))} placeholder="https://rpc-mumbai.maticvigil.com" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
+                  <div><label className="text-xs font-bold text-[#4A4A4A] block mb-1.5">RPC URL</label><input value={newNetwork.rpcUrl} onChange={e => setNewNetwork((p: any) => ({ ...p, rpcUrl: e.target.value }))} placeholder="https://rpc-mumbai.maticvigil.com" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
                 </div>
                 <div className="flex gap-2 mt-3">
                   <button onClick={() => setShowAddNetwork(false)} className="flex-1 py-2 rounded-full text-xs font-semibold border border-[#F0F0F0] text-[#6B6B6B] hover:bg-[#FAFAF8] transition-colors">Cancel</button>
@@ -462,7 +462,7 @@ export default function App() {
         {activeTab === 'swap' && (
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 max-w-xl mx-auto w-full lg:mx-0">
-              <div className="bg-white rounded-2xl border border-[#F0F0F0] p-4 lg:p-6">
+              <div className="bg-white rounded-2xl border-2 border-[#D0D0D0] p-5 lg:p-7 shadow-xl">
                 <div className="flex items-center justify-between mb-5">
                   <h2 className="text-sm lg:text-base font-bold text-[#1A1A1A] flex items-center gap-2"><Repeat size={16} className={isSolana ? 'text-[#9945FF]' : 'text-[#B8A9E8]'} /> Swap {isSolana && <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-[#9945FF] text-[#9945FF]">Solana</span>}</h2>
                   <button onClick={() => setShowSettings(s => !s)} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#FAFAF8]"><Settings size={14} className="text-[#6B6B6B]" /></button>
@@ -471,19 +471,19 @@ export default function App() {
                   <div className="mb-4 p-4 bg-[#FAFAF8] rounded-xl border border-[#F0F0F0]">
                     <p className="text-xs font-semibold text-[#1A1A1A] mb-2">Slippage tolerance</p>
                     <div className="flex gap-2 flex-wrap">
-                      {[0.1, 0.5, 1, 3].map(s => (<button key={s} onClick={() => setSlippage(s)} className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${slippage === s ? 'bg-[#B8A9E8] text-[#1A1A1A]' : 'bg-white border border-[#F0F0F0] text-[#6B6B6B]'}`}>{s}%</button>))}
-                      <div className="flex items-center gap-1 bg-white border border-[#F0F0F0] rounded-full px-3"><input type="number" value={slippage} onChange={e => setSlippage(Number(e.target.value) || 0)} className="w-12 text-xs text-right bg-transparent focus:outline-none text-[#1A1A1A]" /><span className="text-xs text-[#9B9B9B]">%</span></div>
+                      {[0.1, 0.5, 1, 3].map(s => (<button key={s} onClick={() => setSlippage(s)} className={`px-3 py-1.5 rounded-full text-sm font-bold transition-all ${slippage === s ? 'bg-[#B8A9E8] text-[#1A1A1A]' : 'bg-white border border-[#F0F0F0] text-[#6B6B6B]'}`}>{s}%</button>))}
+                      <div className="flex items-center gap-1 bg-white border border-[#F0F0F0] rounded-full px-3"><input type="number" value={slippage} onChange={e => setSlippage(Number(e.target.value) || 0)} className="w-14 text-sm text-right bg-transparent font-bold focus:outline-none text-[#1A1A1A]" /><span className="text-xs text-[#9B9B9B]">%</span></div>
                     </div>
                   </div>
                 )}
                 <TokenInput label="You pay" token={fromToken} amount={amount} onAmountChange={setAmount} onPickerOpen={() => setShowFromPicker(true)} balance={fromBalance} usd={fromUsd} showMax />
-                <div className="flex justify-center -my-2 relative z-10"><button onClick={handleSwitch} className="w-9 h-9 rounded-full bg-white border-2 border-[#FAFAF8] shadow-sm hover:shadow-md hover:rotate-180 transition-all duration-300 flex items-center justify-center text-[#1A1A1A]"><ArrowDownUp size={14} /></button></div>
+                <div className="flex justify-center -my-2 relative z-10"><button onClick={handleSwitch} className="w-10 h-10 rounded-full bg-white border-[3px] border-[#D0D0D0] shadow-md hover:shadow-md hover:rotate-180 transition-all duration-300 flex items-center justify-center text-[#1A1A1A]"><ArrowDownUp size={14} /></button></div>
                 <TokenInput label="You receive" token={toToken} amount={quote ? fmt(quote.amountOut, 6) : ''} readonly onPickerOpen={() => setShowToPicker(true)} balance={toToken ? Number(toToken.balance || 0) : 0} usd={toUsd} />
 
                 {isSolana && <div className="mt-4 p-3 rounded-xl bg-[#9945FF] border border-[#9945FF]/15 flex items-center gap-2"><span className="text-lg">\u25ce</span><span className="text-xs text-[#7C3AED]">Solana DEX is in alpha. Swaps simulated on Devnet.</span></div>}
 
                 {quote && !isSolana && (
-                  <div className="mt-4 p-4 bg-[#FAFAF8] rounded-xl border border-[#F0F0F0] space-y-2">
+                  <div className="mt-4 p-5 bg-[#FAFAF8] rounded-2xl border-2 border-[#D0D0D0] space-y-2">
                     <Row label="Rate" value={`1 ${fromToken.symbol} = ${fmt(quote.rate, 6)} ${toToken.symbol}`} />
                     <Row label="Fee" value={`${fmt(quote.fee, 6)} ${fromToken.symbol} (${(quote.feeBps / 100).toFixed(2)}%)`} accent={ACCENT.amber} />
                     <Row label="Price impact" value={quote.priceImpact.toFixed(3) + '%'} accent={quote.priceImpact > 3 ? ACCENT.coral : quote.priceImpact > 1 ? ACCENT.amber : ACCENT.green} />
@@ -503,10 +503,10 @@ export default function App() {
             <div className="space-y-4">
               <StatCard icon={Coins} c={isSolana ? ACCENT.solana : ACCENT.lilac} label="Tokens on chain" value={portfolioStats.totalTokens} />
               <StatCard icon={Droplets} c={ACCENT.teal} label="Pools available" value={chainPools.length} />
-              <div className="bg-white rounded-2xl border border-[#F0F0F0] p-4 lg:p-5">
-                <h3 className="text-sm font-extrabold text-[#1A1A1A] mb-3 flex items-center gap-2"><Activity size={14} className="text-[#F5A623]" /> Recent</h3>
+              <div className="bg-white rounded-2xl border-2 border-[#D0D0D0] p-4 lg:p-5 shadow-lg">
+                <h3 className="text-base font-black text-[#111] mb-4 flex items-center gap-2"><Activity size={14} className="text-[#F5A623]" /> Recent</h3>
                 <div className="space-y-2.5">
-                  {chainTxs.slice(0, 4).map((tx: any) => { const t = TX_TYPE[safe(tx.type)] || TX_TYPE.swap; const s = TX_STATUS[safe(tx.status)] || TX_STATUS.pending; const Icon = t.i; const SIcon = s.i; return (<div key={tx.id} className="flex items-center gap-3 text-xs"><div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: t.c + '15' }}><Icon size={12} style={{ color: t.c }} /></div><div className="flex-1 min-w-0"><p className="font-medium text-[#1A1A1A] truncate">{tx.type === 'faucet' ? `+${fmt(tx.amountOut)} ${tx.tokenOut}` : `${fmt(tx.amountIn)} ${tx.tokenIn} \u2192 ${fmt(tx.amountOut)} ${tx.tokenOut}`}</p><p className="text-[10px] text-[#6B6B6B] font-semibold">{timeAgo(tx.timestamp)}</p></div><SIcon size={12} style={{ color: s.c }} /></div>); })}
+                  {chainTxs.slice(0, 4).map((tx: any) => { const t = TX_TYPE[safe(tx.type)] || TX_TYPE.swap; const s = TX_STATUS[safe(tx.status)] || TX_STATUS.pending; const Icon = t.i; const SIcon = s.i; return (<div key={tx.id} className="flex items-center gap-3 text-xs"><div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: t.c + '15' }}><Icon size={12} style={{ color: t.c }} /></div><div className="flex-1 min-w-0"><p className="font-medium text-[#1A1A1A] truncate">{tx.type === 'faucet' ? `+${fmt(tx.amountOut)} ${tx.tokenOut}` : `${fmt(tx.amountIn)} ${tx.tokenIn} \u2192 ${fmt(tx.amountOut)} ${tx.tokenOut}`}</p><p className="text-xs text-[#4A4A4A] font-bold">{timeAgo(tx.timestamp)}</p></div><SIcon size={12} style={{ color: s.c }} /></div>); })}
                   {chainTxs.length === 0 && <div className="text-center py-6"><History size={20} className="mx-auto mb-2 text-[#E0E0E0]" /><p className="text-xs text-[#9B9B9B]">No transactions yet</p></div>}
                 </div>
               </div>
@@ -523,12 +523,12 @@ export default function App() {
               <StatCard icon={Activity} c={isSolana ? ACCENT.solana : ACCENT.lilac} label="Transactions" value={chainTxs.length} />
               <StatCard icon={Layers} c={ACCENT.amber} label="Testnet" value={'⚡'} />
             </div>
-            <div className="bg-white rounded-2xl border border-[#F0F0F0] overflow-hidden">
+            <div className="bg-white rounded-2xl border-2 border-[#D0D0D0] overflow-hidden shadow-md">
               <div className="px-5 py-3.5 border-b border-[#F0F0F0] flex items-center justify-between"><h3 className="text-sm font-extrabold text-[#1A1A1A] flex items-center gap-2"><Droplets size={14} className="text-[#4ECDC4]" /> Pools — {CHAINS[selectedChain]?.short}</h3><span className="text-[11px] text-[#9B9B9B]">{chainPools.length} pools</span></div>
               <div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-[10px] uppercase tracking-wider text-[#9B9B9B] font-semibold"><th className="text-left px-5 py-3">Pool</th><th className="text-right px-3 py-3">APR</th><th className="text-right px-3 py-3">Fee</th><th className="text-right px-5 py-3"></th></tr></thead><tbody className="divide-y divide-[#F0F0F0]">
                 {chainPools.map((p: any) => { const tA = tokens.find((t: any) => t.symbol === p.tokenA && t.chain === selectedChain); const tB = tokens.find((t: any) => t.symbol === p.tokenB && t.chain === selectedChain); return (
-                  <tr key={p.id} className="hover:bg-[#FAFAF8] transition-colors group">
-                    <td className="px-5 py-3.5"><div className="flex items-center gap-3"><div className="flex -space-x-2"><span className="w-8 h-8 rounded-full bg-[#B8A9E8] border-2 border-white flex items-center justify-center text-sm">{tA?.logo || '\u25c6'}</span><span className="w-8 h-8 rounded-full bg-[#4ECDC4] border-2 border-white flex items-center justify-center text-sm">{tB?.logo || '\u25c7'}</span></div><div><p className="font-semibold text-[#1A1A1A] text-sm">{p.tokenA} / {p.tokenB}</p><p className="text-[10px] text-[#6B6B6B] font-semibold">Pool #{p.id}</p></div></div></td>
+                  <tr key={p.id} className="hover:bg-[#F5F5F5] transition-colors group border-b border-[#E8E8E8]">
+                    <td className="px-5 py-3.5"><div className="flex items-center gap-3"><div className="flex -space-x-2"><span className="w-8 h-8 rounded-full bg-[#B8A9E8] border-2 border-white flex items-center justify-center text-sm">{tA?.logo || '\u25c6'}</span><span className="w-8 h-8 rounded-full bg-[#4ECDC4] border-2 border-white flex items-center justify-center text-sm">{tB?.logo || '\u25c7'}</span></div><div><p className="font-semibold text-[#1A1A1A] text-sm">{p.tokenA} / {p.tokenB}</p><p className="text-xs text-[#4A4A4A] font-bold">Pool #{p.id}</p></div></div></td>
                     <td className="px-3 py-3.5 text-right"><span className="font-semibold text-[#166534]">{Number(p.apr || 0).toFixed(1)}%</span></td>
                     <td className="px-3 py-3.5 text-right"><span className="text-[10px] px-2 py-0.5 rounded-full font-semibold border bg-[#F5A623] text-[#92400E] border-[#F5A623]/20">{(Number(p.feeBps) / 100).toFixed(2)}%</span></td>
                     <td className="px-5 py-3.5 text-right"><button onClick={() => { setSelectedChain(safe(p.chain)); setFromToken(tA || null); setToToken(tB || null); setActiveTab('swap'); }} className="opacity-0 group-hover:opacity-100 text-xs font-semibold text-[#5B21B6] hover:underline flex items-center gap-1 ml-auto transition-opacity">Swap <ArrowRight size={11} /></button></td>
@@ -549,7 +549,7 @@ export default function App() {
               <StatCard icon={Layers} c={ACCENT.amber} label="Network" value={CHAINS[selectedChain]?.short || ''} />
               <StatCard icon={Activity} c={ACCENT.green} label="Total txs" value={chainTxs.length} />
             </div>
-            <div className="bg-white rounded-2xl border border-[#F0F0F0] overflow-hidden">
+            <div className="bg-white rounded-2xl border-2 border-[#D0D0D0] overflow-hidden shadow-md">
               <div className="px-5 py-3.5 border-b border-[#F0F0F0]"><h3 className="text-sm font-extrabold text-[#1A1A1A] flex items-center gap-2"><Coins size={14} className="text-[#B8A9E8]" /> Your tokens</h3></div>
               <div className="divide-y divide-[#F0F0F0]">
                 {chainTokens.map((t: any) => { const value = Number(t.balance || 0) * Number(t.priceUsd || 0); const pct = portfolioStats.totalUsd > 0 ? (value / portfolioStats.totalUsd) * 100 : 0; return (
@@ -572,14 +572,14 @@ export default function App() {
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               {Object.entries(TX_TYPE).map(([k, t]) => { const Icon = (t as any).i; const count = chainTxs.filter((tx: any) => safe(tx.type) === k).length; return <StatCard key={k} icon={Icon} c={(t as any).c} label={(t as any).label} value={count} />; })}
             </div>
-            <div className="bg-white rounded-2xl border border-[#F0F0F0] overflow-hidden">
+            <div className="bg-white rounded-2xl border-2 border-[#D0D0D0] overflow-hidden shadow-md">
               <div className="px-5 py-3.5 border-b border-[#F0F0F0] flex items-center justify-between"><h3 className="text-sm font-extrabold text-[#1A1A1A] flex items-center gap-2"><History size={14} className="text-[#B8A9E8]" /> Transaction history</h3><span className="text-[11px] text-[#9B9B9B]">{chainTxs.length} transactions</span></div>
               <div className="divide-y divide-[#F0F0F0]">
                 {chainTxs.map((tx: any) => { const t = TX_TYPE[safe(tx.type)] || TX_TYPE.swap; const s = TX_STATUS[safe(tx.status)] || TX_STATUS.pending; const Icon = t.i; const SIcon = s.i; return (
                   <div key={tx.id} className="px-5 py-3.5 hover:bg-[#FAFAF8] transition-colors flex items-center gap-3">
                     <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: t.c + '15' }}><Icon size={14} style={{ color: t.c }} /></div>
                     <div className="flex-1 min-w-0"><div className="flex items-center gap-2 flex-wrap"><p className="text-sm font-extrabold text-[#1A1A1A]">{t.label}</p><span className="text-[10px] px-2 py-0.5 rounded-full font-semibold border" style={{ backgroundColor: s.c + '1A', color: s.t, borderColor: s.c + '33' }}>{tx.status}</span></div><p className="text-xs text-[#6B6B6B] mt-0.5">{tx.type === 'faucet' ? <span>Claimed <strong className="text-[#1A1A1A]">{fmt(tx.amountOut)} {tx.tokenOut}</strong></span> : <span><strong className="text-[#1A1A1A]">{fmt(tx.amountIn)} {tx.tokenIn}</strong> \u2192 <strong className="text-[#1A1A1A]">{fmt(tx.amountOut)} {tx.tokenOut}</strong></span>}</p></div>
-                    <div className="text-right shrink-0"><p className="text-[11px] text-[#6B6B6B] flex items-center justify-end gap-1"><Clock size={10} /> {timeAgo(tx.timestamp)}</p><span className="text-[10px] text-[#9B9B9B] font-mono flex items-center justify-end gap-1 mt-0.5">{shortAddr(tx.txHash)} <ExternalLink size={9} /></span></div>
+                    <div className="text-right shrink-0"><p className="text-[11px] text-[#6B6B6B] flex items-center justify-end gap-1"><Clock size={10} /> {timeAgo(tx.timestamp)}</p><span className="text-xs text-[#4A4A4A] font-bold font-mono flex items-center justify-end gap-1 mt-0.5">{shortAddr(tx.txHash)} <ExternalLink size={9} /></span></div>
                     <SIcon size={14} style={{ color: s.c }} />
                   </div>
                 );})}
@@ -601,7 +601,7 @@ export default function App() {
 
 function StatCard({ icon: Icon, c, label, value }: any) {
   return (
-    <div className="bg-white rounded-2xl border border-[#F0F0F0] p-5 shadow-md hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
+    <div className="bg-white rounded-2xl border-2 border-[#D0D0D0] p-5 shadow-lg hover:-translate-y-0.5 hover:shadow-md transition-all duration-200">
       <div className="flex items-center justify-between mb-3">
         <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ backgroundColor: c + '15' }}><Icon size={14} style={{ color: c }} /></div>
         <span className="text-2xl font-bold text-[#1A1A1A] tabular-nums">{value}</span>
@@ -628,8 +628,8 @@ function TokenInput({ label, token, amount, onAmountChange, readonly, onPickerOp
         {token && <span className="text-[11px] text-[#6B6B6B]">Balance: <strong className="text-[#1A1A1A]">{fmt(balance, 4)}</strong>{showMax && balance > 0 && <button onClick={() => onAmountChange && onAmountChange(String(balance))} className="ml-1.5 text-[10px] font-bold text-[#5B21B6] hover:underline">MAX</button>}</span>}
       </div>
       <div className="flex items-center gap-3">
-        <input type="number" inputMode="decimal" placeholder="0.0" value={amount} readOnly={readonly} onChange={e => onAmountChange && onAmountChange(e.target.value)} className="flex-1 min-w-0 bg-transparent text-2xl font-bold text-[#1A1A1A] placeholder:text-[#E0E0E0] focus:outline-none tabular-nums" />
-        <button onClick={onPickerOpen} className="flex items-center gap-2 bg-white border border-[#F0F0F0] rounded-full px-3 py-2 hover:shadow-sm transition-all shrink-0">
+        <input type="number" inputMode="decimal" placeholder="0.0" value={amount} readOnly={readonly} onChange={e => onAmountChange && onAmountChange(e.target.value)} className="flex-1 min-w-0 bg-transparent text-3xl font-bold text-[#1A1A1A] placeholder:text-[#E0E0E0] focus:outline-none tabular-nums" />
+        <button onClick={onPickerOpen} className="flex items-center gap-2 bg-white border-2 border-[#D0D0D0] rounded-full px-4 py-2.5 hover:shadow-md font-bold transition-all shrink-0">
           {token ? (<><span className="w-6 h-6 rounded-full bg-[#FAFAF8] flex items-center justify-center text-sm">{token.logo || token.symbol?.slice(0, 1)}</span><span className="text-sm font-extrabold text-[#1A1A1A]">{token.symbol}</span><ChevronDown size={12} className="text-[#9B9B9B]" /></>) : (<><span className="text-sm font-semibold text-[#5B21B6]">Select</span><ChevronDown size={12} className="text-[#9B9B9B]" /></>)}
         </button>
       </div>
