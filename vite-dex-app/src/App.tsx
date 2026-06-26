@@ -251,7 +251,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen relative bg-white">
-        <div className="fixed inset-0 z-0 pointer-events-none"><img src={bgWaveNight} alt="" className="w-full h-full object-cover opacity-60" /><div className="absolute inset-0 bg-gradient-to-b from-white/40 via-white/20 to-white/40" /></div>
+        <div className="fixed inset-0 z-0 pointer-events-none"><img src={bgWaveNight} alt="" className="w-full h-full object-cover opacity-85" /></div>
       {/* ====== HEADER ====== */}
       <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-[#F0F0F0]">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between gap-3 flex-wrap">
