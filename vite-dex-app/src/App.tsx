@@ -11,6 +11,7 @@ import txData from './data/transactions.json';
 import metamaskLogo from './assets/metamask.svg';
 import phantomLogo from './assets/phantom.svg';
 import poseidonLogo from './assets/poseidon-wave-logo.png';
+import OceanFish from './OceanFish';
 
 function safe(v: any) { return String(v ?? '').trim(); }
 function fmt(n: any, d = 4) {
@@ -278,10 +279,7 @@ export default function App() {
       </div>
 
       {/* ===== FISH ===== */}
-      <div className="fish fish-1">🐟</div>
-      <div className="fish fish-2">🐠</div>
-      <div className="fish fish-3">🐡</div>
-      <div className="fish fish-4">🦈</div>
+      <OceanFish />
 
       {/* ====== HEADER ====== */}
       <div className="sticky top-0 z-40 header-ocean">
