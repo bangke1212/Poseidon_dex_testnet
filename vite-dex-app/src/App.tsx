@@ -251,11 +251,11 @@ export default function App() {
               <div className="flex items-center gap-1">
                 <button onClick={disconnectWallet} className="flex items-center gap-2 text-xs lg:text-sm font-medium px-3 lg:px-4 py-2 lg:py-2.5 rounded-full bg-white text-[#1A1A1A] border border-[#F0F0F0] hover:shadow-sm transition-all group relative" title={connectedWallet.address}>
                   <span className="w-2 h-2 rounded-full bg-[#4ADE80] animate-pulse" />
-                  <span className="w-6 h-6 rounded-md overflow-hidden flex items-center justify-center shrink-0">
+                  <span className="w-5 h-5 rounded-md flex items-center justify-center shrink-0">
                       {connectedWallet.type === 'metamask' ? (
-                        <img src={metamaskLogo} alt="MetaMask" className="w-5 h-5" />
+                        <img src={metamaskLogo} alt="MetaMask" className="w-4 h-4" />
                       ) : (
-                        <img src={phantomLogo} alt="Phantom" className="w-5 h-5" />
+                        <img src={phantomLogo} alt="Phantom" className="w-4 h-4" />
                       )}
                     </span>
                   <span className="font-mono text-[10px] lg:text-xs hidden sm:inline">{shortAddr(connectedWallet.address)}</span>
@@ -289,12 +289,14 @@ export default function App() {
           <div className="absolute inset-0 bg-[#1A1A1A]/40 backdrop-blur-sm" />
           <div className="relative bg-white rounded-3xl border border-[#F0F0F0] shadow-2xl w-full max-w-md overflow-hidden animate-[scaleIn_300ms_ease-out]" onClick={e => e.stopPropagation()}>
             {/* Header */}
-            <div className="px-6 pt-6 pb-4 text-center">
-              <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-[#F8F7FF] flex items-center justify-center">
-                <div className="flex items-center gap-1">
-                    <img src={metamaskLogo} alt="MetaMask" className="w-9 h-9" />
-                    <img src={phantomLogo} alt="Phantom" className="w-9 h-9" />
-                  </div>
+            <div className="px-6 pt-6 pb-3 text-center">
+              <div className="flex items-center justify-center gap-2 mb-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#FFF5EB] flex items-center justify-center shadow-sm border border-[#FDE4CC]">
+                  <img src={metamaskLogo} alt="MetaMask" className="w-8 h-8" />
+                </div>
+                <div className="w-14 h-14 rounded-2xl bg-[#F3EEFF] flex items-center justify-center shadow-sm border border-[#E0D5F5]">
+                  <img src={phantomLogo} alt="Phantom" className="w-8 h-8" />
+                </div>
               </div>
               <h3 className="text-lg font-bold text-[#1A1A1A]">Connect Wallet</h3>
               <p className="text-xs text-[#9B9B9B] mt-1">Connect via browser extension or mobile app</p>
@@ -308,8 +310,8 @@ export default function App() {
                 disabled={connecting}
                 className="w-full p-4 rounded-2xl border-2 border-[#F0F0F0] hover:border-[#F6851B]/40 hover:bg-[#FFF8F2] transition-all flex items-center gap-4 text-left group disabled:opacity-50 disabled:cursor-wait"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#FFF0E5] flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
-                  <img src={metamaskLogo} alt="MetaMask" className="w-10 h-10" />
+                <div className="w-11 h-11 rounded-xl bg-[#FFF0E3] flex items-center justify-center shrink-0 border border-[#FDE4CC]">
+                  <img src={metamaskLogo} alt="MetaMask" className="w-7 h-7" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
@@ -335,8 +337,8 @@ export default function App() {
                 disabled={connecting}
                 className="w-full p-4 rounded-2xl border-2 border-[#F0F0F0] hover:border-[#8B5CF6]/40 hover:bg-[#F8F5FF] transition-all flex items-center gap-4 text-left group disabled:opacity-50 disabled:cursor-wait"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#F2EDFF] flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
-                  <img src={phantomLogo} alt="Phantom" className="w-10 h-10" />
+                <div className="w-11 h-11 rounded-xl bg-[#F0EBFF] flex items-center justify-center shrink-0 border border-[#E0D5F5]">
+                  <img src={phantomLogo} alt="Phantom" className="w-7 h-7" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
