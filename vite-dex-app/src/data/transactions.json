@@ -1,21 +1,142 @@
 {
   "fields": [
-    { "field": "id", "type": "number", "required": true },
-    { "field": "type", "type": "enum", "enums": ["swap", "add_liquidity", "remove_liquidity", "faucet"] },
-    { "field": "tokenIn", "type": "string" },
-    { "field": "tokenOut", "type": "string" },
-    { "field": "amountIn", "type": "number" },
-    { "field": "amountOut", "type": "number" },
-    { "field": "txHash", "type": "string" },
-    { "field": "status", "type": "enum", "enums": ["pending", "success", "failed"] },
-    { "field": "timestamp", "type": "string" },
-    { "field": "chain", "type": "string" }
+    {
+      "field": "id",
+      "type": "number",
+      "required": true
+    },
+    {
+      "field": "type",
+      "type": "enum",
+      "enums": [
+        "swap",
+        "add_liquidity",
+        "remove_liquidity",
+        "faucet"
+      ]
+    },
+    {
+      "field": "tokenIn",
+      "type": "string"
+    },
+    {
+      "field": "tokenOut",
+      "type": "string"
+    },
+    {
+      "field": "amountIn",
+      "type": "number"
+    },
+    {
+      "field": "amountOut",
+      "type": "number"
+    },
+    {
+      "field": "txHash",
+      "type": "string"
+    },
+    {
+      "field": "status",
+      "type": "enum",
+      "enums": [
+        "pending",
+        "success",
+        "failed"
+      ]
+    },
+    {
+      "field": "timestamp",
+      "type": "string"
+    },
+    {
+      "field": "chain",
+      "type": "string"
+    }
   ],
   "data": [
-    { "id": 1, "type": "swap", "tokenIn": "PUSD", "tokenOut": "PETH", "amountIn": 1000, "amountOut": 0.2918, "txHash": "0xa3f2b1c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcd1", "status": "success", "timestamp": "2026-06-26T05:42:18Z", "chain": "sepolia" },
-    { "id": 2, "type": "add_liquidity", "tokenIn": "PUSD", "tokenOut": "PBTC", "amountIn": 5000, "amountOut": 0.0744, "txHash": "0xb4f3c2d5e6f7890123456789abcdef0123456789abcdef0123456789abcdef02", "status": "success", "timestamp": "2026-06-26T04:15:33Z", "chain": "sepolia" },
-    { "id": 3, "type": "swap", "tokenIn": "PETH", "tokenOut": "PLINK", "amountIn": 0.5, "amountOut": 115.18, "txHash": "0xc5f4d3e6f7890123456789abcdef0123456789abcdef0123456789abcdef0103", "status": "success", "timestamp": "2026-06-25T22:08:51Z", "chain": "sepolia" },
-    { "id": 4, "type": "faucet", "tokenIn": "", "tokenOut": "PUSD", "amountIn": 0, "amountOut": 1000, "txHash": "0xd6f5e4f7890123456789abcdef0123456789abcdef0123456789abcdef010204", "status": "success", "timestamp": "2026-06-25T18:32:09Z", "chain": "sepolia" },
-    { "id": 5, "type": "swap", "tokenIn": "PBTC", "tokenOut": "PUSD", "amountIn": 0.01, "amountOut": 672.51, "txHash": "0xe7f6f5890123456789abcdef0123456789abcdef0123456789abcdef01020305", "status": "pending", "timestamp": "2026-06-26T07:12:44Z", "chain": "sepolia" }
+    {
+      "id": 1,
+      "type": "swap",
+      "tokenIn": "PUSD",
+      "tokenOut": "PETH",
+      "amountIn": 1000,
+      "amountOut": 0.2918,
+      "txHash": "0xa3f2b1c4d5e6f78901234567890abcdef1234567890abcdef1234567890abcd1",
+      "status": "success",
+      "timestamp": "2026-06-26T05:42:18Z",
+      "chain": "sepolia"
+    },
+    {
+      "id": 2,
+      "type": "add_liquidity",
+      "tokenIn": "PUSD",
+      "tokenOut": "PBTC",
+      "amountIn": 5000,
+      "amountOut": 0.0744,
+      "txHash": "0xb4f3c2d5e6f7890123456789abcdef0123456789abcdef0123456789abcdef02",
+      "status": "success",
+      "timestamp": "2026-06-26T04:15:33Z",
+      "chain": "sepolia"
+    },
+    {
+      "id": 3,
+      "type": "swap",
+      "tokenIn": "PETH",
+      "tokenOut": "PLINK",
+      "amountIn": 0.5,
+      "amountOut": 115.18,
+      "txHash": "0xc5f4d3e6f7890123456789abcdef0123456789abcdef0123456789abcdef0103",
+      "status": "success",
+      "timestamp": "2026-06-25T22:08:51Z",
+      "chain": "sepolia"
+    },
+    {
+      "id": 4,
+      "type": "faucet",
+      "tokenIn": "",
+      "tokenOut": "PUSD",
+      "amountIn": 0,
+      "amountOut": 1000,
+      "txHash": "0xd6f5e4f7890123456789abcdef0123456789abcdef0123456789abcdef010204",
+      "status": "success",
+      "timestamp": "2026-06-25T18:32:09Z",
+      "chain": "sepolia"
+    },
+    {
+      "id": 5,
+      "type": "swap",
+      "tokenIn": "PBTC",
+      "tokenOut": "PUSD",
+      "amountIn": 0.01,
+      "amountOut": 672.51,
+      "txHash": "0xe7f6f5890123456789abcdef0123456789abcdef0123456789abcdef01020305",
+      "status": "pending",
+      "timestamp": "2026-06-26T07:12:44Z",
+      "chain": "sepolia"
+    },
+    {
+      "id": 6,
+      "type": "swap",
+      "tokenIn": "SOL",
+      "tokenOut": "USDC",
+      "amountIn": 0.5,
+      "amountOut": 71.25,
+      "txHash": "Sol:x7kP2mN9...",
+      "status": "success",
+      "timestamp": "2026-06-26T06:30:00Z",
+      "chain": "solanaDevnet"
+    },
+    {
+      "id": 7,
+      "type": "faucet",
+      "tokenIn": "",
+      "tokenOut": "SOL",
+      "amountIn": 0,
+      "amountOut": 1.0,
+      "txHash": "Sol:a3dF8zL2...",
+      "status": "success",
+      "timestamp": "2026-06-26T06:28:00Z",
+      "chain": "solanaDevnet"
+    }
   ]
 }
