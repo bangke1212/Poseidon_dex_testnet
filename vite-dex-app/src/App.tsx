@@ -44,11 +44,11 @@ function timeAgo(ts: string) {
 
 const ACCENT = { lilac: '#B8A9E8', amber: '#F5A623', teal: '#4ECDC4', coral: '#FF6B6B', green: '#4ADE80', ink: '#1A1A1A', solana: '#9945FF' };
 
-const CHAINS: Record<string, { label: string; short: string; color: string; icon: string; type: 'evm' | 'solana' }> = {
-  sepolia:         { label: 'Ethereum Sepolia', short: 'Sepolia',  color: ACCENT.lilac,  icon: '◆', type: 'evm' },
-  arbitrumSepolia: { label: 'Arbitrum Sepolia', short: 'Arbitrum', color: ACCENT.teal,   icon: '◈', type: 'evm' },
-  bscTestnet:      { label: 'BSC Testnet',      short: 'BSC',      color: ACCENT.amber,  icon: '◇', type: 'evm' },
-  solanaDevnet:    { label: 'Solana Devnet',    short: 'Solana',   color: ACCENT.solana, icon: '◎', type: 'solana' },
+const CHAINS: Record<string, { label: string; short: string; color: string; icon: string; type: 'evm' | 'solana'; chainId: number | string; rpcUrl: string; nativeToken: string; testnet: boolean }> = {
+  sepolia:         { label: 'Sepolia ETH Testnet',     short: 'Sepolia',  color: ACCENT.lilac,  icon: '◆', type: 'evm',    chainId: 11155111, rpcUrl: 'https://ethereum-sepolia.publicnode.com',       nativeToken: 'ETH',  testnet: true },
+  arbitrumSepolia: { label: 'Arbitrum Sepolia Testnet', short: 'Arbitrum', color: ACCENT.teal,   icon: '◈', type: 'evm',    chainId: 421614,  rpcUrl: 'https://sepolia-rollup.arbitrum.io/rpc',           nativeToken: 'ETH',  testnet: true },
+  bscTestnet:      { label: 'BSC Testnet',              short: 'BSC',      color: ACCENT.amber,  icon: '◇', type: 'evm',    chainId: 97,      rpcUrl: 'https://data-seed-prebsc-1-s1.binance.org:8545', nativeToken: 'tBNB', testnet: true },
+  solanaDevnet:    { label: 'Solana Devnet',            short: 'Solana',   color: ACCENT.solana, icon: '◎', type: 'solana', chainId: 'devnet', rpcUrl: 'https://api.devnet.solana.com',                    nativeToken: 'SOL',  testnet: true },
 };
 
 const TX_STATUS: Record<string, any> = {
@@ -83,13 +83,18 @@ export default function App() {
   const [showFromPicker, setShowFromPicker] = useState(false);
   const [showToPicker, setShowToPicker] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  const [customChains, setCustomChains] = useState<Record<string, { label: string; short: string; color: string; icon: string; type: 'evm' | 'solana'; chainId: number | string; rpcUrl: string; nativeToken: string; testnet: boolean }>>({});
+  const [showAddNetwork, setShowAddNetwork] = useState(false);
+  const [newNetwork, setNewNetwork] = useState({ label: '', chainId: '', rpcUrl: '', nativeToken: 'ETH', icon: '◆', color: '#6B7280' });
+  const [showChainPicker, setShowChainPicker] = useState(false);
   const [swapping, setSwapping] = useState(false);
   const [swapMsg, setSwapMsg] = useState('');
 
+  const allChains = useMemo(() => ({ ...CHAINS, ...customChains }), [customChains]);
   const chainTokens = useMemo(() => tokens.filter((t: any) => safe(t.chain) === selectedChain), [tokens, selectedChain]);
   const chainPools = useMemo(() => pools.filter((p: any) => safe(p.chain) === selectedChain), [pools, selectedChain]);
   const chainTxs = useMemo(() => transactions.filter((t: any) => safe(t.chain) === selectedChain), [transactions, selectedChain]);
-  const currentChain = CHAINS[selectedChain];
+  const currentChain = allChains[selectedChain] || CHAINS[selectedChain];
   const isSolana = currentChain?.type === 'solana';
 
   const detectWallets = useMemo(() => {
@@ -209,9 +214,32 @@ export default function App() {
   };
 
   const handleChainChange = (chainKey: string) => {
-    if (connectedWallet?.type === 'phantom' && chainKey !== 'solanaDevnet') { setWalletError('Phantom only supports Solana'); setTimeout(() => setWalletError(''), 3000); return; }
-    if (connectedWallet?.type === 'metamask' && chainKey === 'solanaDevnet') { setWalletError('MetaMask only supports EVM chains. Connect Phantom for Solana.'); setTimeout(() => setWalletError(''), 3000); return; }
+    const chain = allChains[chainKey];
+    if (!chain) return;
+    if (connectedWallet?.type === 'phantom' && chain.type !== 'solana') { setWalletError('Phantom only supports Solana'); setTimeout(() => setWalletError(''), 3000); return; }
+    if (connectedWallet?.type === 'metamask' && chain.type !== 'evm') { setWalletError('MetaMask only supports EVM chains. Connect Phantom for Solana.'); setTimeout(() => setWalletError(''), 3000); return; }
     setSelectedChain(chainKey);
+    setShowChainPicker(false);
+  };
+
+  const addCustomNetwork = () => {
+    const id = 'custom-' + Date.now();
+    const chain: any = {
+      label: newNetwork.label || 'Custom Testnet',
+      short: newNetwork.label?.slice(0, 6) || 'Custom',
+      color: newNetwork.color,
+      icon: newNetwork.icon,
+      type: 'evm' as const,
+      chainId: Number(newNetwork.chainId) || id,
+      rpcUrl: newNetwork.rpcUrl,
+      nativeToken: newNetwork.nativeToken,
+      testnet: true,
+    };
+    setCustomChains((prev: any) => ({ ...prev, [id]: chain }));
+    setNewNetwork({ label: '', chainId: '', rpcUrl: '', nativeToken: 'ETH', icon: '◆', color: '#6B7280' });
+    setShowAddNetwork(false);
+    setSelectedChain(id);
+    setShowChainPicker(false);
   };
 
   const tabs: Array<{ id: 'swap' | 'pools' | 'portfolio' | 'history'; label: string; icon: any }> = [
@@ -232,14 +260,14 @@ export default function App() {
             <div><h1 className="text-base lg:text-lg font-bold text-[#1A1A1A] tracking-tight">Poseidon DEX</h1><p className="text-[10px] text-[#9B9B9B]">Multi-chain · EVM + Solana</p></div>
           </div>
           <div className="flex items-center gap-2">
-            <div className="relative">
-              <select value={selectedChain} onChange={e => handleChainChange(e.target.value)}
-                className="appearance-none text-xs lg:text-sm font-medium border border-[#F0F0F0] rounded-full pl-8 pr-9 py-2 lg:py-2.5 bg-white text-[#1A1A1A] cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#1A1A1A]/5">
-                {Object.entries(CHAINS).map(([k, c]) => (<option key={k} value={k}>{c.type === 'solana' ? '\u25ce ' : ''}{c.short}</option>))}
-              </select>
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-base pointer-events-none" style={{ color: CHAINS[selectedChain]?.color }}>{CHAINS[selectedChain]?.icon}</span>
-              <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9B9B9B] pointer-events-none" />
-            </div>
+            <button
+              onClick={() => setShowChainPicker(true)}
+              className="flex items-center gap-2 text-xs lg:text-sm font-medium border border-[#F0F0F0] rounded-full pl-3 pr-3 py-2 lg:py-2.5 bg-white text-[#1A1A1A] cursor-pointer hover:shadow-sm transition-all"
+            >
+              <span className="text-base" style={{ color: (allChains as any)[selectedChain]?.color }}>{(allChains as any)[selectedChain]?.icon}</span>
+              <span className="hidden sm:inline max-w-[100px] lg:max-w-none truncate">{(allChains as any)[selectedChain]?.label || selectedChain}</span>
+              <ChevronDown size={14} className="text-[#9B9B9B]" />
+            </button>
             {connectedWallet ? (
               <div className="flex items-center gap-1">
                 <button onClick={disconnectWallet} className="flex items-center gap-2 text-xs lg:text-sm font-medium px-3 lg:px-4 py-2 lg:py-2.5 rounded-full bg-white text-[#1A1A1A] border border-[#F0F0F0] hover:shadow-sm transition-all group relative" title={connectedWallet.address}>
@@ -272,6 +300,60 @@ export default function App() {
           </div>
         </div>
       </div>
+
+      {/* ====== CHAIN PICKER MODAL ====== */}
+      {showChainPicker && (
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center" onClick={() => setShowChainPicker(false)}>
+          <div className="absolute inset-0 bg-[#1A1A1A]/30 backdrop-blur-sm" />
+          <div className="relative bg-white rounded-t-3xl sm:rounded-3xl border border-[#F0F0F0] shadow-2xl w-full sm:max-w-md max-h-[80vh] flex flex-col overflow-hidden animate-[slideUp_300ms_ease-out]" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-center pt-3 pb-1 sm:hidden"><div className="w-10 h-1 rounded-full bg-[#E0E0E0]" /></div>
+            <div className="px-6 pt-3 pb-2 flex items-center justify-between">
+              <h3 className="text-base font-bold text-[#1A1A1A]">Select Network</h3>
+              <button onClick={() => setShowChainPicker(false)} className="w-7 h-7 rounded-full hover:bg-[#FAFAF8] flex items-center justify-center text-[#6B6B6B]">✕</button>
+            </div>
+            <p className="px-6 pb-3 text-[11px] text-[#9B9B9B]">Testnet networks for development and testing</p>
+            <div className="flex-1 overflow-y-auto px-3 pb-2 space-y-1">
+              {Object.entries(allChains).map(([k, c]: [string, any]) => {
+                const active = k === selectedChain;
+                return (
+                  <button key={k} onClick={() => handleChainChange(k)}
+                    className={`w-full p-3 rounded-2xl flex items-center gap-3 text-left transition-all ${active ? 'bg-[#F0F0F0]/80 border border-[#E0E0E0]' : 'hover:bg-[#FAFAF8] border border-transparent'}`}>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0" style={{ backgroundColor: c.color + '20', color: c.color }}>{c.icon}</div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2"><p className="text-sm font-semibold text-[#1A1A1A]">{c.label}</p>{c.testnet && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#F5A623]/10 text-[#92400E] font-medium">TESTNET</span>}</div>
+                      <p className="text-[10px] text-[#6B6B6B] mt-0.5">{c.type === 'solana' ? 'Solana' : 'EVM'} · Chain ID: {c.chainId} · {c.nativeToken}</p>
+                    </div>
+                    {active && <CheckCircle2 size={18} className="text-[#4ADE80] shrink-0" />}
+                  </button>
+                );
+              })}
+            </div>
+            {!showAddNetwork ? (
+              <div className="px-4 pb-5 pt-2">
+                <button onClick={() => setShowAddNetwork(true)} className="w-full p-3 rounded-2xl border-2 border-dashed border-[#E0E0E0] hover:border-[#B8A9E8] hover:bg-[#FAF8FF] transition-all flex items-center justify-center gap-2 text-sm font-medium text-[#6B6B6B] hover:text-[#5B21B6]">
+                  <Plus size={16} />Add Custom Testnet
+                </button>
+              </div>
+            ) : (
+              <div className="px-4 pb-5 pt-2 border-t border-[#F0F0F0]">
+                <p className="text-xs font-semibold text-[#1A1A1A] mb-3">Add Custom EVM Testnet</p>
+                <div className="space-y-2.5">
+                  <div><label className="text-[10px] font-medium text-[#6B6B6B] block mb-1">Network Name</label><input value={newNetwork.label} onChange={e => setNewNetwork((p: any) => ({ ...p, label: e.target.value }))} placeholder="e.g. Polygon Mumbai" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div><label className="text-[10px] font-medium text-[#6B6B6B] block mb-1">Chain ID</label><input value={newNetwork.chainId} onChange={e => setNewNetwork((p: any) => ({ ...p, chainId: e.target.value }))} placeholder="e.g. 80001" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
+                    <div><label className="text-[10px] font-medium text-[#6B6B6B] block mb-1">Native Token</label><input value={newNetwork.nativeToken} onChange={e => setNewNetwork((p: any) => ({ ...p, nativeToken: e.target.value }))} placeholder="MATIC" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
+                  </div>
+                  <div><label className="text-[10px] font-medium text-[#6B6B6B] block mb-1">RPC URL</label><input value={newNetwork.rpcUrl} onChange={e => setNewNetwork((p: any) => ({ ...p, rpcUrl: e.target.value }))} placeholder="https://rpc-mumbai.maticvigil.com" className="w-full px-3 py-2 text-xs border border-[#F0F0F0] rounded-xl bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#B8A9E8] focus:ring-2 focus:ring-[#B8A9E8]/10" /></div>
+                </div>
+                <div className="flex gap-2 mt-3">
+                  <button onClick={() => setShowAddNetwork(false)} className="flex-1 py-2 rounded-full text-xs font-semibold border border-[#F0F0F0] text-[#6B6B6B] hover:bg-[#FAFAF8] transition-colors">Cancel</button>
+                  <button onClick={addCustomNetwork} disabled={!newNetwork.label || !newNetwork.chainId || !newNetwork.rpcUrl} className="flex-1 py-2 rounded-full text-xs font-semibold bg-[#B8A9E8] text-[#1A1A1A] hover:bg-[#A89AD8] disabled:opacity-40 disabled:cursor-not-allowed transition-all">Add Network</button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Wallet Error Toast */}
       {walletError && <div className="fixed top-20 right-4 z-50 animate-[slideIn_300ms_ease-out]"><div className="bg-white border border-[#FF6B6B]/20 rounded-2xl shadow-lg px-4 py-3 flex items-center gap-2 max-w-sm"><Info size={14} className="text-[#DC2626] shrink-0" /><p className="text-xs text-[#DC2626]">{walletError}</p></div></div>}
