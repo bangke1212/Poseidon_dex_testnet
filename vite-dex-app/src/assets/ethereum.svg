@@ -1,13 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 189" width="212" height="189">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
   <defs>
-    <linearGradient id="eth-bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#627EEA"/>
-      <stop offset="100%" style="stop-color:#8A92B2"/>
+    <linearGradient id="ethGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#627EEA"/>
+      <stop offset="100%" stop-color="#454A75"/>
     </linearGradient>
   </defs>
-  <rect width="212" height="189" rx="24" fill="url(#eth-bg)"/>
-  <g transform="translate(62,18)">
-    <path d="M44 0L22.5 44.8 44 57.5 65.5 44.8 44 0z" fill="white" opacity="0.9"/>
-    <path d="M44 62.3L22.5 49.5 44 114 65.5 49.5 44 62.3z" fill="white"/>
+  <rect width="200" height="200" rx="36" fill="url(#ethGrad)"/>
+  <g transform="translate(45,22)">
+    <path d="M55 16L25 68l30 18 30-18L55 16z" fill="white" opacity="0.5"/>
+    <path d="M55 86l-30-18L55 140l30-72-30 18z" fill="white"/>
   </g>
 </svg>

@@ -291,10 +291,13 @@ export default function App() {
             {/* Header */}
             <div className="px-6 pt-6 pb-4 text-center">
               <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-[#F8F7FF] flex items-center justify-center">
-                <img src={connectWalletsImg} alt="Connect" className="w-10 h-10 opacity-80" />
+                <div className="flex items-center gap-1">
+                    <img src={metamaskLogo} alt="MetaMask" className="w-9 h-9" />
+                    <img src={phantomLogo} alt="Phantom" className="w-9 h-9" />
+                  </div>
               </div>
               <h3 className="text-lg font-bold text-[#1A1A1A]">Connect Wallet</h3>
-              <p className="text-xs text-[#9B9B9B] mt-1">Choose your wallet to start trading on Poseidon DEX</p>
+              <p className="text-xs text-[#9B9B9B] mt-1">Connect via browser extension or mobile app</p>
             </div>
 
             {/* Body */}
@@ -306,7 +309,7 @@ export default function App() {
                 className="w-full p-4 rounded-2xl border-2 border-[#F0F0F0] hover:border-[#F6851B]/40 hover:bg-[#FFF8F2] transition-all flex items-center gap-4 text-left group disabled:opacity-50 disabled:cursor-wait"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#FFF0E5] flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
-                  <img src={metamaskLogo} alt="MetaMask" className="w-9 h-9" />
+                  <img src={metamaskLogo} alt="MetaMask" className="w-10 h-10" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
@@ -333,7 +336,7 @@ export default function App() {
                 className="w-full p-4 rounded-2xl border-2 border-[#F0F0F0] hover:border-[#8B5CF6]/40 hover:bg-[#F8F5FF] transition-all flex items-center gap-4 text-left group disabled:opacity-50 disabled:cursor-wait"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#F2EDFF] flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
-                  <img src={phantomLogo} alt="Phantom" className="w-9 h-9" />
+                  <img src={phantomLogo} alt="Phantom" className="w-10 h-10" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
