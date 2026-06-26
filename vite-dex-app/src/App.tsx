@@ -8,6 +8,13 @@ import {
 import tokensData from './data/tokens.json';
 import poolsData from './data/pools.json';
 import txData from './data/transactions.json';
+import metamaskLogo from './assets/metamask.svg';
+import phantomLogo from './assets/phantom.svg';
+import solanaLogo from './assets/solana.svg';
+import ethereumLogo from './assets/ethereum.svg';
+import arbitrumLogo from './assets/arbitrum.svg';
+import bscLogo from './assets/bsc.svg';
+import connectWalletsImg from './assets/connect-wallets.svg';
 
 function safe(v: any) { return String(v ?? '').trim(); }
 function fmt(n: any, d = 4) {
@@ -107,10 +114,12 @@ export default function App() {
             window.open('https://metamask.app.link/dapp/' + window.location.href.replace(/^https?:\/\//, ''), '_blank');
             throw new Error('Opening MetaMask... Approve in app.');
           }
-          throw new Error('MetaMask not installed');
+          // Redirect to install page
+            window.open('https://metamask.io/download/', '_blank');
+            throw new Error('MetaMask not installed. Opening download page...');
         }
         const accounts = await w.ethereum.request({ method: 'eth_requestAccounts' });
-        setConnectedWallet({ type: 'metamask', name: 'MetaMask', icon: '\U0001f98a', address: accounts[0], chain: 'evm' });
+        setConnectedWallet({ type: 'metamask', name: 'MetaMask', icon: 'metamask', address: accounts[0], chain: 'evm' });
         const chainId = await w.ethereum.request({ method: 'eth_chainId' });
         const m: Record<string, string> = { '0xaa36a7': 'sepolia', '0x66eee': 'arbitrumSepolia', '0x61': 'bscTestnet' };
         if (m[chainId]) setSelectedChain(m[chainId]);
@@ -124,11 +133,12 @@ export default function App() {
             window.open('https://phantom.app/ul/browse/' + encodeURIComponent(window.location.href), '_blank');
             throw new Error('Opening Phantom... Approve in app.');
           }
-          throw new Error('Phantom not installed');
+          window.open('https://phantom.app/download', '_blank');
+          throw new Error('Phantom not installed. Opening download page...');
         }
         const resp = await p.connect();
         const addr = resp.publicKey.toString();
-        setConnectedWallet({ type: 'phantom', name: 'Phantom', icon: '\U0001f47b', address: addr, chain: 'solana' });
+        setConnectedWallet({ type: 'phantom', name: 'Phantom', icon: 'phantom', address: addr, chain: 'solana' });
         setSelectedChain('solanaDevnet');
         p.on('disconnect', () => setConnectedWallet(null));
         p.on('accountChanged', (pk: any) => { if (pk) setConnectedWallet(prev => prev ? { ...prev, address: pk.toString() } : null); else setConnectedWallet(null); });
@@ -241,7 +251,13 @@ export default function App() {
               <div className="flex items-center gap-1">
                 <button onClick={disconnectWallet} className="flex items-center gap-2 text-xs lg:text-sm font-medium px-3 lg:px-4 py-2 lg:py-2.5 rounded-full bg-white text-[#1A1A1A] border border-[#F0F0F0] hover:shadow-sm transition-all group relative" title={connectedWallet.address}>
                   <span className="w-2 h-2 rounded-full bg-[#4ADE80] animate-pulse" />
-                  <span className="text-lg">{connectedWallet.icon}</span>
+                  <span className="w-6 h-6 rounded-md overflow-hidden flex items-center justify-center shrink-0">
+                      {connectedWallet.type === 'metamask' ? (
+                        <img src={metamaskLogo} alt="MetaMask" className="w-5 h-5" />
+                      ) : (
+                        <img src={phantomLogo} alt="Phantom" className="w-5 h-5" />
+                      )}
+                    </span>
                   <span className="font-mono text-[10px] lg:text-xs hidden sm:inline">{shortAddr(connectedWallet.address)}</span>
                   <span className="hidden sm:inline text-[10px] px-1.5 py-0.5 rounded-full font-semibold" style={{ backgroundColor: (connectedWallet.chain === 'solana' ? ACCENT.solana : ACCENT.lilac) + '20', color: connectedWallet.chain === 'solana' ? ACCENT.solana : ACCENT.lilac }}>{connectedWallet.chain === 'solana' ? 'SOL' : 'EVM'}</span>
                   <LogOut size={11} className="text-[#9B9B9B] opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -269,37 +285,91 @@ export default function App() {
 
       {/* ====== WALLET MODAL ====== */}
       {showWalletModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => setShowWalletModal(false)}>
-          <div className="absolute inset-0 bg-[#1A1A1A]/30 backdrop-blur-sm" />
-          <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-sm overflow-hidden" onClick={e => e.stopPropagation()}>
-            <div className="p-5 border-b border-[#F0F0F0] flex items-center justify-between">
-              <h3 className="text-base font-bold text-[#1A1A1A] flex items-center gap-2"><Wallet size={16} className="text-[#B8A9E8]" />Connect Wallet</h3>
-              <button onClick={() => setShowWalletModal(false)} className="w-7 h-7 rounded-full hover:bg-[#FAFAF8] flex items-center justify-center text-[#6B6B6B]">\u2715</button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => { setShowWalletModal(false); setWalletError(''); }}>
+          <div className="absolute inset-0 bg-[#1A1A1A]/40 backdrop-blur-sm" />
+          <div className="relative bg-white rounded-3xl border border-[#F0F0F0] shadow-2xl w-full max-w-md overflow-hidden animate-[scaleIn_300ms_ease-out]" onClick={e => e.stopPropagation()}>
+            {/* Header */}
+            <div className="px-6 pt-6 pb-4 text-center">
+              <div className="w-16 h-16 mx-auto mb-3 rounded-2xl bg-[#F8F7FF] flex items-center justify-center">
+                <img src={connectWalletsImg} alt="Connect" className="w-10 h-10 opacity-80" />
+              </div>
+              <h3 className="text-lg font-bold text-[#1A1A1A]">Connect Wallet</h3>
+              <p className="text-xs text-[#9B9B9B] mt-1">Choose your wallet to start trading on Poseidon DEX</p>
             </div>
-            <div className="p-4 space-y-3">
+
+            {/* Body */}
+            <div className="px-5 pb-5 space-y-3">
               {/* MetaMask */}
-              <button onClick={() => connectWallet('metamask')} disabled={connecting}
-                className="w-full p-4 rounded-xl border border-[#F0F0F0] hover:border-[#B8A9E8] hover:bg-[#FAFAF8] transition-all flex items-center gap-4 text-left disabled:opacity-50">
-                <div className="w-12 h-12 rounded-xl bg-[#F6851B]/10 flex items-center justify-center text-2xl">\U0001f98a</div>
-                <div className="flex-1">
-                  <p className="font-semibold text-[#1A1A1A]">MetaMask</p>
-                  <p className="text-xs text-[#9B9B9B]">{detectWallets.metamask ? 'EVM Chains (Sepolia, Arbitrum, BSC)' : 'Not installed \u2014 Click to install'}</p>
+              <button
+                onClick={() => connectWallet('metamask')}
+                disabled={connecting}
+                className="w-full p-4 rounded-2xl border-2 border-[#F0F0F0] hover:border-[#F6851B]/40 hover:bg-[#FFF8F2] transition-all flex items-center gap-4 text-left group disabled:opacity-50 disabled:cursor-wait"
+              >
+                <div className="w-12 h-12 rounded-xl bg-[#FFF0E5] flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
+                  <img src={metamaskLogo} alt="MetaMask" className="w-9 h-9" />
                 </div>
-                <ArrowRight size={16} className="text-[#9B9B9B]" />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold text-[#1A1A1A] text-sm">MetaMask</p>
+                    {detectWallets.metamask ? (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4ADE80]/10 text-[#166534] font-medium">Installed</span>
+                    ) : (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FF6B6B]/10 text-[#DC2626] font-medium">Not installed</span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-[#9B9B9B] mt-0.5">EVM Chains: Ethereum, Arbitrum, BSC</p>
+                  <div className="flex items-center gap-3 mt-2">
+                    <span className="flex items-center gap-1 text-[10px] text-[#6B6B6B]"><span className="text-[10px]">💻</span> Extension</span>
+                    <span className="flex items-center gap-1 text-[10px] text-[#6B6B6B]"><span className="text-[10px]">📱</span> Mobile app</span>
+                  </div>
+                </div>
+                <ArrowRight size={18} className="text-[#B8A9E8] group-hover:translate-x-0.5 transition-transform" />
               </button>
+
               {/* Phantom */}
-              <button onClick={() => connectWallet('phantom')} disabled={connecting}
-                className="w-full p-4 rounded-xl border border-[#F0F0F0] hover:border-[#9945FF] hover:bg-[#FAFAF8] transition-all flex items-center gap-4 text-left disabled:opacity-50">
-                <div className="w-12 h-12 rounded-xl bg-[#9945FF]/10 flex items-center justify-center text-2xl">\U0001f47b</div>
-                <div className="flex-1">
-                  <p className="font-semibold text-[#1A1A1A]">Phantom</p>
-                  <p className="text-xs text-[#9B9B9B]">{detectWallets.phantom ? 'Solana Devnet' : 'Not installed \u2014 Click to install'}</p>
+              <button
+                onClick={() => connectWallet('phantom')}
+                disabled={connecting}
+                className="w-full p-4 rounded-2xl border-2 border-[#F0F0F0] hover:border-[#8B5CF6]/40 hover:bg-[#F8F5FF] transition-all flex items-center gap-4 text-left group disabled:opacity-50 disabled:cursor-wait"
+              >
+                <div className="w-12 h-12 rounded-xl bg-[#F2EDFF] flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
+                  <img src={phantomLogo} alt="Phantom" className="w-9 h-9" />
                 </div>
-                <ArrowRight size={16} className="text-[#9B9B9B]" />
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <p className="font-semibold text-[#1A1A1A] text-sm">Phantom</p>
+                    {detectWallets.phantom ? (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4ADE80]/10 text-[#166534] font-medium">Installed</span>
+                    ) : (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FF6B6B]/10 text-[#DC2626] font-medium">Not installed</span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-[#9B9B9B] mt-0.5">Solana, Ethereum, Polygon & more</p>
+                  <div className="flex items-center gap-3 mt-2">
+                    <span className="flex items-center gap-1 text-[10px] text-[#6B6B6B]"><span className="text-[10px]">💻</span> Extension</span>
+                    <span className="flex items-center gap-1 text-[10px] text-[#6B6B6B]"><span className="text-[10px]">📱</span> Mobile app</span>
+                  </div>
+                </div>
+                <ArrowRight size={18} className="text-[#9945FF] group-hover:translate-x-0.5 transition-transform" />
               </button>
             </div>
-            <div className="px-4 pb-4 pt-1">
-              <p className="text-[10px] text-[#9B9B9B] text-center">By connecting, you agree to use this DEX for testnet purposes only.</p>
+
+            {/* Footer */}
+            <div className="px-5 pb-5 pt-1">
+              {connecting ? (
+                <div className="flex items-center justify-center gap-2 py-3">
+                  <RefreshCw size={14} className="animate-spin text-[#B8A9E8]" />
+                  <span className="text-xs text-[#6B6B6B]">Connecting...</span>
+                </div>
+              ) : (
+                <div className="bg-[#FAFAF8] rounded-xl p-3 flex items-start gap-2">
+                  <Info size={12} className="text-[#9B9B9B] mt-0.5 shrink-0" />
+                  <p className="text-[10px] text-[#9B9B9B] leading-relaxed">
+                    By connecting, you agree to use this DEX for <strong className="text-[#1A1A1A]">testnet purposes only</strong>.
+                    {!detectWallets.metamask && !detectWallets.phantom && ' No wallet detected — you will be redirected to install.'}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
