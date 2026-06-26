@@ -14,6 +14,7 @@ import solanaLogo from './assets/solana.svg';
 import ethereumLogo from './assets/ethereum.svg';
 import arbitrumLogo from './assets/arbitrum.svg';
 import bscLogo from './assets/bsc.svg';
+import poseidonLogo from './assets/poseidon-wave-logo.png';
 import connectWalletsImg from './assets/connect-wallets.svg';
 
 function safe(v: any) { return String(v ?? '').trim(); }
@@ -252,11 +253,8 @@ export default function App() {
       {/* ====== HEADER ====== */}
       <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-[#F0F0F0]">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between gap-3 flex-wrap">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-[#1A1A1A] flex items-center justify-center relative shrink-0">
-              <Sparkles size={16} className="text-white" />
-              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-[#B8A9E8] border-2 border-white" />
-            </div>
+          <div className="flex items-center gap-2.5">
+            <img src={poseidonLogo} alt="Poseidon" className="w-8 h-8 lg:w-10 lg:h-10 rounded-xl object-cover shadow-sm" />
             <div><h1 className="text-base lg:text-lg font-bold text-[#1A1A1A] tracking-tight">Poseidon DEX</h1><p className="text-[10px] text-[#9B9B9B]">Multi-chain · EVM + Solana</p></div>
           </div>
           <div className="flex items-center gap-2">
