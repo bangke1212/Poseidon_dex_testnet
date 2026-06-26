@@ -1,0 +1,22 @@
+{
+  "fields": [
+    { "field": "id", "type": "number", "required": true },
+    { "field": "tokenA", "type": "string", "required": true },
+    { "field": "tokenB", "type": "string", "required": true },
+    { "field": "reserveA", "type": "number" },
+    { "field": "reserveB", "type": "number" },
+    { "field": "feeBps", "type": "number" },
+    { "field": "tvlUsd", "type": "number" },
+    { "field": "volume24h", "type": "number" },
+    { "field": "apr", "type": "number" },
+    { "field": "chain", "type": "enum", "enums": ["sepolia", "arbitrumSepolia", "bscTestnet"] }
+  ],
+  "data": [
+    { "id": 1, "tokenA": "PUSD", "tokenB": "PETH", "reserveA": 342075, "reserveB": 100, "feeBps": 30, "tvlUsd": 684150, "volume24h": 125400, "apr": 18.4, "chain": "sepolia" },
+    { "id": 2, "tokenA": "PUSD", "tokenB": "PBTC", "reserveA": 672505, "reserveB": 10, "feeBps": 30, "tvlUsd": 1345010, "volume24h": 287300, "apr": 22.1, "chain": "sepolia" },
+    { "id": 3, "tokenA": "PETH", "tokenB": "PBTC", "reserveA": 50, "reserveB": 2.54, "feeBps": 25, "tvlUsd": 341037, "volume24h": 89500, "apr": 15.7, "chain": "sepolia" },
+    { "id": 4, "tokenA": "PUSD", "tokenB": "PLINK", "reserveA": 148500, "reserveB": 10000, "feeBps": 30, "tvlUsd": 297000, "volume24h": 45800, "apr": 12.3, "chain": "sepolia" },
+    { "id": 5, "tokenA": "PLINK", "tokenB": "WBTC", "reserveA": 4520, "reserveB": 1, "feeBps": 25, "tvlUsd": 134247, "volume24h": 28900, "apr": 14.8, "chain": "sepolia" },
+    { "id": 6, "tokenA": "FHZ", "tokenB": "JWB", "reserveA": 250000, "reserveB": 6863, "feeBps": 30, "tvlUsd": 12245, "volume24h": 1850, "apr": 8.5, "chain": "arbitrumSepolia" }
+  ]
+}
