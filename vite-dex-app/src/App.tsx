@@ -27,14 +27,7 @@ function fmt(n: any, d = 4) {
   if (Math.abs(num) >= 1) return num.toFixed(Math.min(d, 4));
   return num.toFixed(d);
 }
-function fmtUsd(n: any) {
-  if (!n) return '$0';
-  const num = Number(n);
-  if (num >= 1e9) return '$' + (num / 1e9).toFixed(2) + 'B';
-  if (num >= 1e6) return '$' + (num / 1e6).toFixed(2) + 'M';
-  if (num >= 1e3) return '$' + (num / 1e3).toFixed(2) + 'K';
-  return '$' + num.toFixed(2);
-}
+function fmtUsd(_n: any) { return '—'; }
 function shortAddr(addr: string) {
   if (!addr) return '';
   return addr.slice(0, 6) + '...' + addr.slice(-4);
@@ -426,10 +419,8 @@ export default function App() {
               </div>
             </div>
             <div className="space-y-4">
-              <StatCard icon={Wallet} c={isSolana ? ACCENT.solana : ACCENT.lilac} label="Portfolio value" value={fmtUsd(portfolioStats.totalUsd)} />
-              <StatCard icon={Droplets} c={ACCENT.teal} label="Total TVL" value={fmtUsd(portfolioStats.totalTvl)} />
-              <StatCard icon={TrendingUp} c={ACCENT.amber} label="Volume 24h" value={fmtUsd(portfolioStats.totalVolume)} />
-              <StatCard icon={Coins} c={ACCENT.green} label="Tokens" value={portfolioStats.totalTokens} />
+              <StatCard icon={Coins} c={isSolana ? ACCENT.solana : ACCENT.lilac} label="Tokens on chain" value={portfolioStats.totalTokens} />
+              <StatCard icon={Droplets} c={ACCENT.teal} label="Pools available" value={chainPools.length} />
               <div className="bg-white rounded-2xl border border-[#F0F0F0] p-4 lg:p-5">
                 <h3 className="text-sm font-semibold text-[#1A1A1A] mb-3 flex items-center gap-2"><Activity size={14} className="text-[#F5A623]" /> Recent</h3>
                 <div className="space-y-2.5">
@@ -446,24 +437,22 @@ export default function App() {
           <div className="space-y-5">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
               <StatCard icon={Droplets} c={ACCENT.teal} label="Total pools" value={chainPools.length} />
-              <StatCard icon={Layers} c={isSolana ? ACCENT.solana : ACCENT.lilac} label="Total TVL" value={fmtUsd(portfolioStats.totalTvl)} />
-              <StatCard icon={TrendingUp} c={ACCENT.amber} label="Volume 24h" value={fmtUsd(portfolioStats.totalVolume)} />
               <StatCard icon={Zap} c={ACCENT.green} label="Best APR" value={(chainPools.length > 0 ? Math.max(...chainPools.map((p: any) => Number(p.apr || 0))).toFixed(1) : '0') + '%'} />
+              <StatCard icon={Activity} c={isSolana ? ACCENT.solana : ACCENT.lilac} label="Transactions" value={chainTxs.length} />
+              <StatCard icon={Layers} c={ACCENT.amber} label="Testnet" value={'⚡'} />
             </div>
             <div className="bg-white rounded-2xl border border-[#F0F0F0] overflow-hidden">
               <div className="px-5 py-3.5 border-b border-[#F0F0F0] flex items-center justify-between"><h3 className="text-sm font-semibold text-[#1A1A1A] flex items-center gap-2"><Droplets size={14} className="text-[#4ECDC4]" /> Pools — {CHAINS[selectedChain]?.short}</h3><span className="text-[11px] text-[#9B9B9B]">{chainPools.length} pools</span></div>
-              <div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-[10px] uppercase tracking-wider text-[#9B9B9B] font-semibold"><th className="text-left px-5 py-3">Pool</th><th className="text-right px-3 py-3">TVL</th><th className="text-right px-3 py-3">Vol 24h</th><th className="text-right px-3 py-3">Fee</th><th className="text-right px-3 py-3">APR</th><th className="text-right px-5 py-3"></th></tr></thead><tbody className="divide-y divide-[#F0F0F0]">
+              <div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-[10px] uppercase tracking-wider text-[#9B9B9B] font-semibold"><th className="text-left px-5 py-3">Pool</th><th className="text-right px-3 py-3">APR</th><th className="text-right px-3 py-3">Fee</th><th className="text-right px-5 py-3"></th></tr></thead><tbody className="divide-y divide-[#F0F0F0]">
                 {chainPools.map((p: any) => { const tA = tokens.find((t: any) => t.symbol === p.tokenA && t.chain === selectedChain); const tB = tokens.find((t: any) => t.symbol === p.tokenB && t.chain === selectedChain); return (
                   <tr key={p.id} className="hover:bg-[#FAFAF8] transition-colors group">
                     <td className="px-5 py-3.5"><div className="flex items-center gap-3"><div className="flex -space-x-2"><span className="w-8 h-8 rounded-full bg-[#B8A9E8]/15 border-2 border-white flex items-center justify-center text-sm">{tA?.logo || '\u25c6'}</span><span className="w-8 h-8 rounded-full bg-[#4ECDC4]/15 border-2 border-white flex items-center justify-center text-sm">{tB?.logo || '\u25c7'}</span></div><div><p className="font-semibold text-[#1A1A1A] text-sm">{p.tokenA} / {p.tokenB}</p><p className="text-[10px] text-[#9B9B9B]">Pool #{p.id}</p></div></div></td>
-                    <td className="px-3 py-3.5 text-right font-semibold text-[#1A1A1A]">{fmtUsd(p.tvlUsd)}</td>
-                    <td className="px-3 py-3.5 text-right text-[#6B6B6B]">{fmtUsd(p.volume24h)}</td>
-                    <td className="px-3 py-3.5 text-right"><span className="text-[10px] px-2 py-0.5 rounded-full font-semibold border bg-[#F5A623]/10 text-[#92400E] border-[#F5A623]/20">{(Number(p.feeBps) / 100).toFixed(2)}%</span></td>
                     <td className="px-3 py-3.5 text-right"><span className="font-semibold text-[#166534]">{Number(p.apr || 0).toFixed(1)}%</span></td>
+                    <td className="px-3 py-3.5 text-right"><span className="text-[10px] px-2 py-0.5 rounded-full font-semibold border bg-[#F5A623]/10 text-[#92400E] border-[#F5A623]/20">{(Number(p.feeBps) / 100).toFixed(2)}%</span></td>
                     <td className="px-5 py-3.5 text-right"><button onClick={() => { setSelectedChain(safe(p.chain)); setFromToken(tA || null); setToToken(tB || null); setActiveTab('swap'); }} className="opacity-0 group-hover:opacity-100 text-xs font-semibold text-[#5B21B6] hover:underline flex items-center gap-1 ml-auto transition-opacity">Swap <ArrowRight size={11} /></button></td>
                   </tr>
                 );})}
-                {chainPools.length === 0 && <tr><td colSpan={6} className="text-center py-12"><Droplets size={28} className="mx-auto mb-3 text-[#E0E0E0]" /><p className="text-sm text-[#9B9B9B]">No pools on {CHAINS[selectedChain]?.short} yet</p></td></tr>}
+                {chainPools.length === 0 && <tr><td colSpan={4} className="text-center py-12"><Droplets size={28} className="mx-auto mb-3 text-[#E0E0E0]" /><p className="text-sm text-[#9B9B9B]">No pools on {CHAINS[selectedChain]?.short} yet</p></td></tr>}
               </tbody></table></div>
             </div>
           </div>
@@ -473,9 +462,9 @@ export default function App() {
         {activeTab === 'portfolio' && (
           <div className="space-y-5">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <StatCard icon={Wallet} c={isSolana ? ACCENT.solana : ACCENT.lilac} label="Total value" value={fmtUsd(portfolioStats.totalUsd)} />
-              <StatCard icon={Coins} c={ACCENT.amber} label="Tokens held" value={portfolioStats.totalTokens} />
-              <StatCard icon={Layers} c={ACCENT.teal} label="Network" value={CHAINS[selectedChain]?.short || ''} />
+              <StatCard icon={Wallet} c={isSolana ? ACCENT.solana : ACCENT.lilac} label="Tokens held" value={portfolioStats.totalTokens} />
+              <StatCard icon={Droplets} c={ACCENT.teal} label="Pools" value={chainPools.length} />
+              <StatCard icon={Layers} c={ACCENT.amber} label="Network" value={CHAINS[selectedChain]?.short || ''} />
               <StatCard icon={Activity} c={ACCENT.green} label="Total txs" value={chainTxs.length} />
             </div>
             <div className="bg-white rounded-2xl border border-[#F0F0F0] overflow-hidden">
@@ -562,7 +551,7 @@ function TokenInput({ label, token, amount, onAmountChange, readonly, onPickerOp
           {token ? (<><span className="w-6 h-6 rounded-full bg-[#FAFAF8] flex items-center justify-center text-sm">{token.logo || token.symbol?.slice(0, 1)}</span><span className="text-sm font-semibold text-[#1A1A1A]">{token.symbol}</span><ChevronDown size={12} className="text-[#9B9B9B]" /></>) : (<><span className="text-sm font-semibold text-[#5B21B6]">Select</span><ChevronDown size={12} className="text-[#9B9B9B]" /></>)}
         </button>
       </div>
-      {token && amount && Number(amount) > 0 && <p className="text-[11px] text-[#9B9B9B] mt-1 tabular-nums">{fmtUsd(usd)}</p>}
+      
     </div>
   );
 }
@@ -579,7 +568,7 @@ function TokenPicker({ tokens, excludeSymbol, onPick, onClose }: any) {
       <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-md max-h-[80vh] flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
         <div className="p-5 border-b border-[#F0F0F0]"><div className="flex items-center justify-between mb-3"><h3 className="text-base font-bold text-[#1A1A1A]">Select a token</h3><button onClick={onClose} className="w-7 h-7 rounded-full hover:bg-[#FAFAF8] flex items-center justify-center text-[#6B6B6B]">\u2715</button></div><div className="relative"><Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9B9B9B]" /><input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Search name or paste address" className="w-full pl-10 pr-4 py-2.5 text-sm border border-[#F0F0F0] rounded-full bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#E0E0E0] focus:ring-2 focus:ring-[#1A1A1A]/5 transition-all" /></div></div>
         <div className="flex-1 overflow-y-auto">
-          {filtered.map((t: any) => (<button key={t.id} onClick={() => onPick(t)} className="w-full px-5 py-3 hover:bg-[#FAFAF8] transition-colors flex items-center gap-3 text-left"><div className="w-10 h-10 rounded-full bg-[#FAFAF8] border border-[#F0F0F0] flex items-center justify-center text-lg shrink-0">{t.logo || t.symbol?.slice(0, 1)}</div><div className="flex-1 min-w-0"><p className="font-semibold text-[#1A1A1A] text-sm">{t.symbol}</p><p className="text-[11px] text-[#9B9B9B] truncate">{t.name} \u00b7 {shortAddr(t.address)}</p></div><div className="text-right shrink-0"><p className="text-sm font-semibold text-[#1A1A1A] tabular-nums">{fmt(t.balance, 4)}</p><p className="text-[11px] text-[#9B9B9B] tabular-nums">{fmtUsd(Number(t.balance || 0) * Number(t.priceUsd || 0))}</p></div></button>))}
+          {filtered.map((t: any) => (<button key={t.id} onClick={() => onPick(t)} className="w-full px-5 py-3 hover:bg-[#FAFAF8] transition-colors flex items-center gap-3 text-left"><div className="w-10 h-10 rounded-full bg-[#FAFAF8] border border-[#F0F0F0] flex items-center justify-center text-lg shrink-0">{t.logo || t.symbol?.slice(0, 1)}</div><div className="flex-1 min-w-0"><p className="font-semibold text-[#1A1A1A] text-sm">{t.symbol}</p><p className="text-[11px] text-[#9B9B9B] truncate">{t.name} \u00b7 {shortAddr(t.address)}</p></div><div className="text-right shrink-0"><p className="text-sm font-semibold text-[#1A1A1A] tabular-nums">{fmt(t.balance, 4)}</p></div></button>))}
           {filtered.length === 0 && <div className="text-center py-12"><Coins size={24} className="mx-auto mb-2 text-[#E0E0E0]" /><p className="text-sm text-[#9B9B9B]">No tokens match "{q}"</p></div>}
         </div>
       </div>
