@@ -15,6 +15,7 @@ import ethereumLogo from './assets/ethereum.svg';
 import arbitrumLogo from './assets/arbitrum.svg';
 import bscLogo from './assets/bsc.svg';
 import poseidonLogo from './assets/poseidon-wave-logo.png';
+import bgWaveNight from './assets/poseidon-wave-night.png';
 import connectWalletsImg from './assets/connect-wallets.svg';
 
 function safe(v: any) { return String(v ?? '').trim(); }
@@ -249,18 +250,19 @@ export default function App() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAFAF8]">
+    <div className="min-h-screen relative bg-[#1A1A2E]">
+        <div className="fixed inset-0 z-0 pointer-events-none"><img src={bgWaveNight} alt="" className="w-full h-full object-cover opacity-25" /><div className="absolute inset-0 bg-gradient-to-b from-[#1A1A2E]/95 via-[#1A1A2E]/80 to-[#1A1A2E]/95" /></div>
       {/* ====== HEADER ====== */}
-      <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-[#F0F0F0]">
+      <div className="sticky top-0 z-40 bg-[#1A1A2E]/90 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-2.5">
             <img src={poseidonLogo} alt="Poseidon" className="w-8 h-8 lg:w-10 lg:h-10 rounded-xl object-cover shadow-sm" />
-            <div><h1 className="text-base lg:text-lg font-bold text-[#1A1A1A] tracking-tight">Poseidon DEX</h1><p className="text-[10px] text-[#9B9B9B]">Multi-chain · EVM + Solana</p></div>
+            <div><h1 className="text-base lg:text-lg font-bold text-white tracking-tight">Poseidon DEX</h1><p className="text-[10px] text-[#B0B0C0]">Multi-chain · EVM + Solana</p></div>
           </div>
           <div className="flex items-center gap-2">
             <button
               onClick={() => setShowChainPicker(true)}
-              className="flex items-center gap-2 text-xs lg:text-sm font-medium border border-[#F0F0F0] rounded-full pl-3 pr-3 py-2 lg:py-2.5 bg-white text-[#1A1A1A] cursor-pointer hover:shadow-sm transition-all"
+              className="flex items-center gap-2 text-xs lg:text-sm font-medium border border-white/20 rounded-full pl-3 pr-3 py-2 lg:py-2.5 bg-white/10 text-white backdrop-blur-sm cursor-pointer hover:shadow-sm transition-all"
             >
               <span className="text-base" style={{ color: (allChains as any)[selectedChain]?.color }}>{(allChains as any)[selectedChain]?.icon}</span>
               <span className="hidden sm:inline max-w-[100px] lg:max-w-none truncate">{(allChains as any)[selectedChain]?.label || selectedChain}</span>
@@ -504,7 +506,7 @@ export default function App() {
               <div className="bg-white rounded-2xl border border-[#F0F0F0] p-4 lg:p-5">
                 <h3 className="text-sm font-semibold text-[#1A1A1A] mb-3 flex items-center gap-2"><Activity size={14} className="text-[#F5A623]" /> Recent</h3>
                 <div className="space-y-2.5">
-                  {chainTxs.slice(0, 4).map((tx: any) => { const t = TX_TYPE[safe(tx.type)] || TX_TYPE.swap; const s = TX_STATUS[safe(tx.status)] || TX_STATUS.pending; const Icon = t.i; const SIcon = s.i; return (<div key={tx.id} className="flex items-center gap-3 text-xs"><div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: t.c + '15' }}><Icon size={12} style={{ color: t.c }} /></div><div className="flex-1 min-w-0"><p className="font-medium text-[#1A1A1A] truncate">{tx.type === 'faucet' ? `+${fmt(tx.amountOut)} ${tx.tokenOut}` : `${fmt(tx.amountIn)} ${tx.tokenIn} \u2192 ${fmt(tx.amountOut)} ${tx.tokenOut}`}</p><p className="text-[10px] text-[#9B9B9B]">{timeAgo(tx.timestamp)}</p></div><SIcon size={12} style={{ color: s.c }} /></div>); })}
+                  {chainTxs.slice(0, 4).map((tx: any) => { const t = TX_TYPE[safe(tx.type)] || TX_TYPE.swap; const s = TX_STATUS[safe(tx.status)] || TX_STATUS.pending; const Icon = t.i; const SIcon = s.i; return (<div key={tx.id} className="flex items-center gap-3 text-xs"><div className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: t.c + '15' }}><Icon size={12} style={{ color: t.c }} /></div><div className="flex-1 min-w-0"><p className="font-medium text-[#1A1A1A] truncate">{tx.type === 'faucet' ? `+${fmt(tx.amountOut)} ${tx.tokenOut}` : `${fmt(tx.amountIn)} ${tx.tokenIn} \u2192 ${fmt(tx.amountOut)} ${tx.tokenOut}`}</p><p className="text-[10px] text-[#B0B0C0]">{timeAgo(tx.timestamp)}</p></div><SIcon size={12} style={{ color: s.c }} /></div>); })}
                   {chainTxs.length === 0 && <div className="text-center py-6"><History size={20} className="mx-auto mb-2 text-[#E0E0E0]" /><p className="text-xs text-[#9B9B9B]">No transactions yet</p></div>}
                 </div>
               </div>
@@ -526,7 +528,7 @@ export default function App() {
               <div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-[10px] uppercase tracking-wider text-[#9B9B9B] font-semibold"><th className="text-left px-5 py-3">Pool</th><th className="text-right px-3 py-3">APR</th><th className="text-right px-3 py-3">Fee</th><th className="text-right px-5 py-3"></th></tr></thead><tbody className="divide-y divide-[#F0F0F0]">
                 {chainPools.map((p: any) => { const tA = tokens.find((t: any) => t.symbol === p.tokenA && t.chain === selectedChain); const tB = tokens.find((t: any) => t.symbol === p.tokenB && t.chain === selectedChain); return (
                   <tr key={p.id} className="hover:bg-[#FAFAF8] transition-colors group">
-                    <td className="px-5 py-3.5"><div className="flex items-center gap-3"><div className="flex -space-x-2"><span className="w-8 h-8 rounded-full bg-[#B8A9E8]/15 border-2 border-white flex items-center justify-center text-sm">{tA?.logo || '\u25c6'}</span><span className="w-8 h-8 rounded-full bg-[#4ECDC4]/15 border-2 border-white flex items-center justify-center text-sm">{tB?.logo || '\u25c7'}</span></div><div><p className="font-semibold text-[#1A1A1A] text-sm">{p.tokenA} / {p.tokenB}</p><p className="text-[10px] text-[#9B9B9B]">Pool #{p.id}</p></div></div></td>
+                    <td className="px-5 py-3.5"><div className="flex items-center gap-3"><div className="flex -space-x-2"><span className="w-8 h-8 rounded-full bg-[#B8A9E8]/15 border-2 border-white flex items-center justify-center text-sm">{tA?.logo || '\u25c6'}</span><span className="w-8 h-8 rounded-full bg-[#4ECDC4]/15 border-2 border-white flex items-center justify-center text-sm">{tB?.logo || '\u25c7'}</span></div><div><p className="font-semibold text-[#1A1A1A] text-sm">{p.tokenA} / {p.tokenB}</p><p className="text-[10px] text-[#B0B0C0]">Pool #{p.id}</p></div></div></td>
                     <td className="px-3 py-3.5 text-right"><span className="font-semibold text-[#166534]">{Number(p.apr || 0).toFixed(1)}%</span></td>
                     <td className="px-3 py-3.5 text-right"><span className="text-[10px] px-2 py-0.5 rounded-full font-semibold border bg-[#F5A623]/10 text-[#92400E] border-[#F5A623]/20">{(Number(p.feeBps) / 100).toFixed(2)}%</span></td>
                     <td className="px-5 py-3.5 text-right"><button onClick={() => { setSelectedChain(safe(p.chain)); setFromToken(tA || null); setToToken(tB || null); setActiveTab('swap'); }} className="opacity-0 group-hover:opacity-100 text-xs font-semibold text-[#5B21B6] hover:underline flex items-center gap-1 ml-auto transition-opacity">Swap <ArrowRight size={11} /></button></td>
