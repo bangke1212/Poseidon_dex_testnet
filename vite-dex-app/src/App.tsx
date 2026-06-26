@@ -251,9 +251,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen relative bg-white">
-        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden"><div className="absolute inset-0 bg-white/40 z-10" /><img src={bgWaveDaylight} alt="" className="w-full h-full object-cover opacity-30 relative z-0" /></div>
+        <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden"><img src={bgWaveDaylight} alt="" className="w-full h-full object-cover" /></div>
       {/* ====== HEADER ====== */}
-      <div className="sticky top-0 z-40 bg-white border-b border-[#F0F0F0] shadow-sm">
+      <div className="sticky top-0 z-40 bg-white border-b border-[#E0E0E0] shadow-md">
         <div className="max-w-7xl mx-auto px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between gap-3 flex-wrap">
           <div className="flex items-center gap-2.5">
             <img src={poseidonLogo} alt="Poseidon" className="w-8 h-8 lg:w-10 lg:h-10 rounded-xl object-cover shadow-sm" />
@@ -281,9 +281,9 @@ export default function App() {
                     </span>
                   <span className="font-mono text-[10px] lg:text-xs hidden sm:inline">{shortAddr(connectedWallet.address)}</span>
                   <span className="hidden sm:inline text-[10px] px-1.5 py-0.5 rounded-full font-semibold" style={{ backgroundColor: (connectedWallet.chain === 'solana' ? ACCENT.solana : ACCENT.lilac) + '20', color: connectedWallet.chain === 'solana' ? ACCENT.solana : ACCENT.lilac }}>{connectedWallet.chain === 'solana' ? 'SOL' : 'EVM'}</span>
-                  <LogOut size={11} className="text-[#9B9B9B] opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <LogOut size={11} className="text-[#9B9B9B] group-hover:opacity-100 transition-opacity" />
                 </button>
-                {chainMismatch && <span className="text-[10px] px-2 py-1 rounded-full bg-[#FF6B6B]/10 text-[#DC2626] font-medium animate-pulse"><WifiOff size={10} className="inline mr-1" />Wrong network</span>}
+                {chainMismatch && <span className="text-[10px] px-2 py-1 rounded-full bg-[#FF6B6B] text-[#DC2626] font-medium animate-pulse"><WifiOff size={10} className="inline mr-1" />Wrong network</span>}
               </div>
             ) : (
               <button onClick={() => setShowWalletModal(true)} className="flex items-center gap-2 text-xs lg:text-sm font-semibold px-4 py-2.5 rounded-full bg-[#B8A9E8] text-[#1A1A1A] hover:bg-[#A89AD8] hover:shadow-md transition-all duration-200">
@@ -293,7 +293,7 @@ export default function App() {
           </div>
         </div>
         <div className="max-w-7xl mx-auto px-4 lg:px-8 pb-3 lg:pb-4">
-          <div className="flex gap-1 bg-[#E8E8E8] rounded-full p-1 w-fit overflow-x-auto">
+          <div className="flex gap-1 bg-[#E5E5E5] rounded-full p-1 w-fit overflow-x-auto">
             {tabs.map(t => { const Icon = t.icon; const active = activeTab === t.id; return (
               <button key={t.id} onClick={() => setActiveTab(t.id)} className={`flex items-center gap-1.5 px-3 lg:px-4 py-2 text-xs lg:text-sm font-medium rounded-full transition-all whitespace-nowrap ${active ? 'bg-white text-[#1A1A1A] shadow-sm' : 'text-[#6B6B6B] hover:text-[#1A1A1A]'}`}><Icon size={14} />{t.label}</button>
             );})}
@@ -304,7 +304,7 @@ export default function App() {
       {/* ====== CHAIN PICKER MODAL ====== */}
       {showChainPicker && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center" onClick={() => setShowChainPicker(false)}>
-          <div className="absolute inset-0 bg-[#1A1A1A]/60" />
+          <div className="absolute inset-0 bg-[#1A1A1A]" />
           <div className="relative bg-white rounded-t-3xl sm:rounded-3xl border border-[#F0F0F0] shadow-2xl w-full sm:max-w-md max-h-[80vh] flex flex-col overflow-hidden animate-[slideUp_300ms_ease-out]" onClick={e => e.stopPropagation()}>
             <div className="flex justify-center pt-3 pb-1 sm:hidden"><div className="w-10 h-1 rounded-full bg-[#E0E0E0]" /></div>
             <div className="px-6 pt-3 pb-2 flex items-center justify-between">
@@ -317,10 +317,10 @@ export default function App() {
                 const active = k === selectedChain;
                 return (
                   <button key={k} onClick={() => handleChainChange(k)}
-                    className={`w-full p-3 rounded-2xl flex items-center gap-3 text-left transition-all ${active ? 'bg-[#F0F0F0]/80 border border-[#E0E0E0]' : 'hover:bg-[#FAFAF8] border border-transparent'}`}>
+                    className={`w-full p-3 rounded-2xl flex items-center gap-3 text-left transition-all ${active ? 'bg-[#F0F0F0] border border-[#E0E0E0]' : 'hover:bg-[#FAFAF8] border border-transparent'}`}>
                     <div className="w-10 h-10 rounded-xl flex items-center justify-center text-lg shrink-0" style={{ backgroundColor: c.color + '20', color: c.color }}>{c.icon}</div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2"><p className="text-sm font-extrabold text-[#1A1A1A]">{c.label}</p>{c.testnet && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#F5A623]/10 text-[#92400E] font-medium">TESTNET</span>}</div>
+                      <div className="flex items-center gap-2"><p className="text-sm font-extrabold text-[#1A1A1A]">{c.label}</p>{c.testnet && <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-[#F5A623] text-[#92400E] font-medium">TESTNET</span>}</div>
                       <p className="text-[10px] text-[#6B6B6B] mt-0.5">{c.type === 'solana' ? 'Solana' : 'EVM'} · Chain ID: {c.chainId} · {c.nativeToken}</p>
                     </div>
                     {active && <CheckCircle2 size={18} className="text-[#4ADE80] shrink-0" />}
@@ -361,7 +361,7 @@ export default function App() {
       {/* ====== WALLET MODAL ====== */}
       {showWalletModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={() => { setShowWalletModal(false); setWalletError(''); }}>
-          <div className="absolute inset-0 bg-[#1A1A1A]/60" />
+          <div className="absolute inset-0 bg-[#1A1A1A]" />
           <div className="relative bg-white rounded-3xl border border-[#F0F0F0] shadow-2xl w-full max-w-md overflow-hidden animate-[scaleIn_300ms_ease-out]" onClick={e => e.stopPropagation()}>
             {/* Header */}
             <div className="px-6 pt-6 pb-3 text-center">
@@ -392,9 +392,9 @@ export default function App() {
                   <div className="flex items-center gap-2">
                     <p className="font-semibold text-[#1A1A1A] text-sm">MetaMask</p>
                     {detectWallets.metamask ? (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4ADE80]/10 text-[#166534] font-medium">Installed</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4ADE80] text-[#166534] font-medium">Installed</span>
                     ) : (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FF6B6B]/10 text-[#DC2626] font-medium">Not installed</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FF6B6B] text-[#DC2626] font-medium">Not installed</span>
                     )}
                   </div>
                   <p className="text-[11px] text-[#9B9B9B] mt-0.5">EVM Chains: Ethereum, Arbitrum, BSC</p>
@@ -419,9 +419,9 @@ export default function App() {
                   <div className="flex items-center gap-2">
                     <p className="font-semibold text-[#1A1A1A] text-sm">Phantom</p>
                     {detectWallets.phantom ? (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4ADE80]/10 text-[#166534] font-medium">Installed</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#4ADE80] text-[#166534] font-medium">Installed</span>
                     ) : (
-                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FF6B6B]/10 text-[#DC2626] font-medium">Not installed</span>
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#FF6B6B] text-[#DC2626] font-medium">Not installed</span>
                     )}
                   </div>
                   <p className="text-[11px] text-[#9B9B9B] mt-0.5">Solana, Ethereum, Polygon & more</p>
@@ -464,7 +464,7 @@ export default function App() {
             <div className="lg:col-span-2 max-w-xl mx-auto w-full lg:mx-0">
               <div className="bg-white rounded-2xl border border-[#F0F0F0] p-4 lg:p-6">
                 <div className="flex items-center justify-between mb-5">
-                  <h2 className="text-sm lg:text-base font-bold text-[#1A1A1A] flex items-center gap-2"><Repeat size={16} className={isSolana ? 'text-[#9945FF]' : 'text-[#B8A9E8]'} /> Swap {isSolana && <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-[#9945FF]/10 text-[#9945FF]">Solana</span>}</h2>
+                  <h2 className="text-sm lg:text-base font-bold text-[#1A1A1A] flex items-center gap-2"><Repeat size={16} className={isSolana ? 'text-[#9945FF]' : 'text-[#B8A9E8]'} /> Swap {isSolana && <span className="text-[10px] px-2 py-0.5 rounded-full font-semibold bg-[#9945FF] text-[#9945FF]">Solana</span>}</h2>
                   <button onClick={() => setShowSettings(s => !s)} className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[#FAFAF8]"><Settings size={14} className="text-[#6B6B6B]" /></button>
                 </div>
                 {showSettings && (
@@ -480,7 +480,7 @@ export default function App() {
                 <div className="flex justify-center -my-2 relative z-10"><button onClick={handleSwitch} className="w-9 h-9 rounded-full bg-white border-2 border-[#FAFAF8] shadow-sm hover:shadow-md hover:rotate-180 transition-all duration-300 flex items-center justify-center text-[#1A1A1A]"><ArrowDownUp size={14} /></button></div>
                 <TokenInput label="You receive" token={toToken} amount={quote ? fmt(quote.amountOut, 6) : ''} readonly onPickerOpen={() => setShowToPicker(true)} balance={toToken ? Number(toToken.balance || 0) : 0} usd={toUsd} />
 
-                {isSolana && <div className="mt-4 p-3 rounded-xl bg-[#9945FF]/5 border border-[#9945FF]/15 flex items-center gap-2"><span className="text-lg">\u25ce</span><span className="text-xs text-[#7C3AED]">Solana DEX is in alpha. Swaps simulated on Devnet.</span></div>}
+                {isSolana && <div className="mt-4 p-3 rounded-xl bg-[#9945FF] border border-[#9945FF]/15 flex items-center gap-2"><span className="text-lg">\u25ce</span><span className="text-xs text-[#7C3AED]">Solana DEX is in alpha. Swaps simulated on Devnet.</span></div>}
 
                 {quote && !isSolana && (
                   <div className="mt-4 p-4 bg-[#FAFAF8] rounded-xl border border-[#F0F0F0] space-y-2">
@@ -491,8 +491,8 @@ export default function App() {
                     {activePool && <Row label="Pool" value={`#${activePool.id} \u00b7 ${activePool.tokenA}/${activePool.tokenB}`} />}
                   </div>
                 )}
-                {fromToken && toToken && amount && !activePool && !isSolana && <div className="mt-4 p-3 rounded-xl bg-[#FF6B6B]/10 border border-[#FF6B6B]/20 flex items-center gap-2"><Info size={14} className="text-[#DC2626]" /><span className="text-xs text-[#DC2626]">No pool for {fromToken.symbol}/{toToken.symbol} on {CHAINS[selectedChain]?.short}.</span></div>}
-                {swapMsg && <div className={`mt-4 p-3 rounded-xl border flex items-center gap-2 ${swapMsg.includes('failed') ? 'bg-[#FF6B6B]/10 border-[#FF6B6B]/20' : 'bg-[#4ADE80]/10 border-[#4ADE80]/20'}`}>{swapMsg.includes('failed') ? <XCircle size={14} className="text-[#DC2626]" /> : <CheckCircle2 size={14} className="text-[#166534]" />}<span className={`text-xs ${swapMsg.includes('failed') ? 'text-[#DC2626]' : 'text-[#166534]'}`}>{swapMsg}</span></div>}
+                {fromToken && toToken && amount && !activePool && !isSolana && <div className="mt-4 p-3 rounded-xl bg-[#FF6B6B] border border-[#FF6B6B]/20 flex items-center gap-2"><Info size={14} className="text-[#DC2626]" /><span className="text-xs text-[#DC2626]">No pool for {fromToken.symbol}/{toToken.symbol} on {CHAINS[selectedChain]?.short}.</span></div>}
+                {swapMsg && <div className={`mt-4 p-3 rounded-xl border flex items-center gap-2 ${swapMsg.includes('failed') ? 'bg-[#FF6B6B] border-[#FF6B6B]/20' : 'bg-[#4ADE80] border-[#4ADE80]/20'}`}>{swapMsg.includes('failed') ? <XCircle size={14} className="text-[#DC2626]" /> : <CheckCircle2 size={14} className="text-[#166534]" />}<span className={`text-xs ${swapMsg.includes('failed') ? 'text-[#DC2626]' : 'text-[#166534]'}`}>{swapMsg}</span></div>}
 
                 <button onClick={handleSwap} disabled={swapping || !amount || Number(amount) <= 0 || (!quote && !isSolana) || (!activePool && !isSolana)}
                   className={`w-full mt-5 py-3.5 rounded-full font-semibold text-sm transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2 ${isSolana ? 'bg-[#9945FF] text-white hover:bg-[#7C3AED]' : 'bg-[#B8A9E8] text-[#1A1A1A] hover:bg-[#A89AD8]'} hover:shadow-md`}>
@@ -528,9 +528,9 @@ export default function App() {
               <div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-[10px] uppercase tracking-wider text-[#9B9B9B] font-semibold"><th className="text-left px-5 py-3">Pool</th><th className="text-right px-3 py-3">APR</th><th className="text-right px-3 py-3">Fee</th><th className="text-right px-5 py-3"></th></tr></thead><tbody className="divide-y divide-[#F0F0F0]">
                 {chainPools.map((p: any) => { const tA = tokens.find((t: any) => t.symbol === p.tokenA && t.chain === selectedChain); const tB = tokens.find((t: any) => t.symbol === p.tokenB && t.chain === selectedChain); return (
                   <tr key={p.id} className="hover:bg-[#FAFAF8] transition-colors group">
-                    <td className="px-5 py-3.5"><div className="flex items-center gap-3"><div className="flex -space-x-2"><span className="w-8 h-8 rounded-full bg-[#B8A9E8]/15 border-2 border-white flex items-center justify-center text-sm">{tA?.logo || '\u25c6'}</span><span className="w-8 h-8 rounded-full bg-[#4ECDC4]/15 border-2 border-white flex items-center justify-center text-sm">{tB?.logo || '\u25c7'}</span></div><div><p className="font-semibold text-[#1A1A1A] text-sm">{p.tokenA} / {p.tokenB}</p><p className="text-[10px] text-[#6B6B6B] font-semibold">Pool #{p.id}</p></div></div></td>
+                    <td className="px-5 py-3.5"><div className="flex items-center gap-3"><div className="flex -space-x-2"><span className="w-8 h-8 rounded-full bg-[#B8A9E8] border-2 border-white flex items-center justify-center text-sm">{tA?.logo || '\u25c6'}</span><span className="w-8 h-8 rounded-full bg-[#4ECDC4] border-2 border-white flex items-center justify-center text-sm">{tB?.logo || '\u25c7'}</span></div><div><p className="font-semibold text-[#1A1A1A] text-sm">{p.tokenA} / {p.tokenB}</p><p className="text-[10px] text-[#6B6B6B] font-semibold">Pool #{p.id}</p></div></div></td>
                     <td className="px-3 py-3.5 text-right"><span className="font-semibold text-[#166534]">{Number(p.apr || 0).toFixed(1)}%</span></td>
-                    <td className="px-3 py-3.5 text-right"><span className="text-[10px] px-2 py-0.5 rounded-full font-semibold border bg-[#F5A623]/10 text-[#92400E] border-[#F5A623]/20">{(Number(p.feeBps) / 100).toFixed(2)}%</span></td>
+                    <td className="px-3 py-3.5 text-right"><span className="text-[10px] px-2 py-0.5 rounded-full font-semibold border bg-[#F5A623] text-[#92400E] border-[#F5A623]/20">{(Number(p.feeBps) / 100).toFixed(2)}%</span></td>
                     <td className="px-5 py-3.5 text-right"><button onClick={() => { setSelectedChain(safe(p.chain)); setFromToken(tA || null); setToToken(tB || null); setActiveTab('swap'); }} className="opacity-0 group-hover:opacity-100 text-xs font-semibold text-[#5B21B6] hover:underline flex items-center gap-1 ml-auto transition-opacity">Swap <ArrowRight size={11} /></button></td>
                   </tr>
                 );})}
@@ -646,7 +646,7 @@ function TokenPicker({ tokens, excludeSymbol, onPick, onClose }: any) {
   }, [tokens, excludeSymbol, q]);
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-[fadeIn_200ms_ease-out]" onClick={onClose}>
-      <div className="absolute inset-0 bg-[#1A1A1A]/60" />
+      <div className="absolute inset-0 bg-[#1A1A1A]" />
       <div className="relative bg-white rounded-2xl border border-[#F0F0F0] shadow-xl w-full max-w-md max-h-[80vh] flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
         <div className="p-5 border-b border-[#F0F0F0]"><div className="flex items-center justify-between mb-3"><h3 className="text-base font-bold text-[#1A1A1A]">Select a token</h3><button onClick={onClose} className="w-7 h-7 rounded-full hover:bg-[#FAFAF8] flex items-center justify-center text-[#6B6B6B]">\u2715</button></div><div className="relative"><Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#9B9B9B]" /><input autoFocus value={q} onChange={e => setQ(e.target.value)} placeholder="Search name or paste address" className="w-full pl-10 pr-4 py-2.5 text-sm border border-[#F0F0F0] rounded-full bg-white text-[#1A1A1A] placeholder:text-[#9B9B9B] focus:outline-none focus:border-[#E0E0E0] focus:ring-2 focus:ring-[#1A1A1A]/5 transition-all" /></div></div>
         <div className="flex-1 overflow-y-auto">
