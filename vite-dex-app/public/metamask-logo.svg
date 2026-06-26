@@ -1,38 +1,33 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 189" width="212" height="189">
   <defs>
-    <linearGradient id="mmGrad" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#F6851B"/>
-      <stop offset="50%" stop-color="#E2761B"/>
-      <stop offset="100%" stop-color="#CD6116"/>
-    </linearGradient>
+    <style>
+      .mm-body { fill: #E2761B; }
+      .mm-ear { fill: #CD6116; }
+      .mm-snout { fill: #FFE8C8; }
+      .mm-nose { fill: #1A1A1A; }
+      .mm-eye { fill: #1A1A1A; }
+      .mm-shine { fill: #FFFFFF; }
+    </style>
   </defs>
-  <rect width="200" height="200" rx="36" fill="#FFFFFF"/>
-  
-  <!-- Fox head - polygonal -->
-  <g transform="translate(35,20) scale(0.95)">
-    <!-- Main head shape -->
-    <path d="M63 5L38 45l-15 10-18 35L0 95l8 45 5 10 15 5 22-12 18 5 22-12 18 5 24 10 12-8-5-10 10-42-5-45-18-30-10-16L63 5z" fill="url(#mmGrad)"/>
-    
-    <!-- Darker sides (ears) -->
-    <path d="M63 5L40 42l-15 8-18 35L2 93l-2 8 5-3 18-22 15-8 12-5 13-18 8-28-8-20z" fill="#CD6116"/>
-    <path d="M63 5L86 30l8 28 13 18 12 5 15 8 18 22 5 3-2-8-5-43-18-30-10-16-17-8z" fill="#CD6116"/>
-    
-    <!-- Center nose/muzzle -->
-    <path d="M45 88l18 12 18-12-3-15-15-12-15 12-3 15z" fill="#FFE8C8"/>
-    
-    <!-- Nose tip -->
-    <path d="M56 85l8 8 8-8-4-4-4-2-4 2-4 4z" fill="#1A1A1A"/>
-    
+  <rect width="212" height="189" rx="24" fill="#FFFFFF"/>
+  <g transform="translate(38,16) scale(0.64)">
+    <!-- Main shape -->
+    <path class="mm-body" d="M197.6 0L122.2 56.1l14-33L197.6 0zM16.7 0l74.4 56.6L77.8 23 16.7 0zM169.1 137.3l-20 30.7-42.8 11.8-43.3-11.8-19.5-30.7L0 96.8l17-53.7L63 32.5l31.6 7.5h22.1l32.1-7.5 46 10.6 17 53.7-42.6 40.5z"/>
+    <!-- Ear shadows -->
+    <path class="mm-ear" d="M197.6 0L122.2 56.1l-10-18 35-35 50.4-3.1zM16.7 0l74.4 56.6-10 18L31.2 32.5 16.7 0z"/>
+    <!-- Snout -->
+    <path class="mm-snout" d="M107.3 94.5l-11.2 16.8-35.2-1.6L47 74l60.3 20.5zM167.3 74l-14.1 35.7-35.2 1.6-11-16.8L167.3 74z"/>
     <!-- Eyes -->
-    <path d="M38 72l12-6 4 8-8 6-8-8z" fill="#1A1A1A"/>
-    <path d="M72 72l-12-6-4 8 8 6 8-8z" fill="#1A1A1A"/>
-    
+    <ellipse class="mm-eye" cx="92" cy="72" rx="10" ry="13" transform="rotate(-8 92 72)"/>
+    <ellipse class="mm-eye" cx="122" cy="72" rx="10" ry="13" transform="rotate(8 122 72)"/>
     <!-- Eye shine -->
-    <circle cx="46" cy="70" r="2" fill="white"/>
-    <circle cx="68" cy="70" r="2" fill="white"/>
-    
-    <!-- Top highlights -->
-    <path d="M63 10l10 25 8-5-6-20-12 0z" fill="#F5A623" opacity="0.4"/>
-    <path d="M63 10l-10 25-8-5 6-20 12 0z" fill="#F5A623" opacity="0.4"/>
+    <circle class="mm-shine" cx="96" cy="68" r="3.5"/>
+    <circle class="mm-shine" cx="124" cy="68" r="3.5"/>
+    <!-- Nose -->
+    <ellipse class="mm-nose" cx="107" cy="84" rx="8" ry="6"/>
+    <!-- Bottom snout lines -->
+    <path class="mm-body" d="M107.3 116.4l5.4 24.4-27.2-7.8-2.2-22.4 24 5.8zM130.8 140.8l5.4-24.4 24-5.8-3.6 22.4-25.8 7.8z"/>
+    <!-- Lower body -->
+    <path class="mm-ear" d="M108.9 172.5l27.2-7.8 20 30.7-3.2-32.8-44-10.6v20.5zM107.3 151.9v20.6l-42.8-11.8-3 32.8 19.5-30.7 26.3-10.9z"/>
   </g>
 </svg>

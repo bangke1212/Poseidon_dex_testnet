@@ -1,13 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 189" width="212" height="189">
   <defs>
-    <linearGradient id="phBg2" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="phBg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0%" stop-color="#7C3AED"/>
       <stop offset="100%" stop-color="#A855F7"/>
     </linearGradient>
   </defs>
-  <rect width="200" height="200" rx="36" fill="url(#phBg2)"/>
-  <path d="M100 32C68 32 42 58 42 90v48c0 17 14 30 30 30h8c5 0 9-4 9-9v-8c0-5-4-9-9-9h-5c-7 0-12-6-12-13v-39c0-21 17-38 38-38s37 17 37 38v39c0 7-5 13-12 13h-5c-5 0-9 4-9 9v8c0 5 4 9 9 9h8c17 0 30-13 30-30V90c0-32-26-58-58-58z" fill="white"/>
-  <circle cx="85" cy="90" r="8" fill="#A855F7"/>
-  <circle cx="115" cy="90" r="8" fill="#A855F7"/>
-  <ellipse cx="100" cy="108" rx="10" ry="7" fill="none" stroke="#A855F7" stroke-width="3" stroke-linecap="round"/>
+  <rect width="212" height="189" rx="24" fill="url(#phBg)"/>
+  <g transform="translate(36,20) scale(0.96)">
+    <!-- Ghost body -->
+    <path d="M70 10C42 10 20 32 20 60v40c0 16 12 30 28 30h6c5 0 8-3 8-8v-7c0-4-3-8-8-8h-4c-6 0-10-5-10-11V60c0-16 14-30 30-30s30 14 30 30v36c0 6-4 11-10 11h-4c-5 0-8 4-8 8v7c0 5 3 8 8 8h6c16 0 28-14 28-30V60c0-28-22-50-50-50z" fill="white"/>
+    <!-- Eyes -->
+    <circle cx="56" cy="64" r="7" fill="#7C3AED"/>
+    <circle cx="84" cy="64" r="7" fill="#7C3AED"/>
+    <!-- Eye shine -->
+    <circle cx="58" cy="62" r="2.5" fill="white"/>
+    <circle cx="86" cy="62" r="2.5" fill="white"/>
+    <!-- Mouth smile -->
+    <path d="M60 82 Q70 92 80 82" fill="none" stroke="#A855F7" stroke-width="3" stroke-linecap="round"/>
+  </g>
 </svg>
